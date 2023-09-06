@@ -1,0 +1,108 @@
+public class Usuario {
+    private String nombreUsuario;
+    private String correoElectronico;
+    private String contraseña;
+    private double saldo;
+
+    public void registrarse() {
+		}
+
+    public void iniciarSesion() {
+
+		}
+    public void verPerfil() {
+
+    }
+    public void realizarTransaccion() { 
+		}
+}
+
+public class Membresia {
+    private String tipoMembresia;
+    private double precioMensual;
+    private String beneficios;
+		}
+}
+
+public class Rango {
+    private String nombreRango;
+    private String descripcion;
+    private String requisitos;
+
+    public boolean verificarRequisitos(Usuario usuario) { 
+		}
+}
+
+public class Juego {
+    private String nombreJuego;
+    private String descripcion;
+    private Categoria categoria;
+
+    public void jugar() {
+		}
+    public String obtenerInformacion() {
+		}
+}
+
+public class Categoria {
+    private String nombreCategoria;
+    private String descripcion;
+
+    public List<Juego> listarJuegos() {
+
+    }
+}
+
+public class Objeto {
+    private String nombreObjeto;
+    private String descripcion;
+    private double valorEnJuego;
+
+    public void usarObjeto() {
+		}
+    public void comprarObjeto(Usuario usuario) {
+		}
+}
+
+public class Logro {
+    private String nombreLogro;
+    private String descripcion;
+    private int puntosLogro;
+
+    public void otorgarLogro(Usuario usuario) { 
+		}
+    public List<Logro> verLogrosDesbloqueados(Usuario usuario) { 
+		}
+}
+
+public class RealizarTransaccion {
+    private double cantidad;
+    private Date fecha;
+    private String estadoTransaccion;
+
+    public void procesarTransaccion() { 
+		}
+    public void cancelarTransaccion() { 
+		}
+}
+
+public class MedioPago {
+    private String tipoMedioPago;
+    private String informacionCuenta;
+
+    public void realizarPago() {
+		}
+    public boolean verificarInformacion() { 
+		}
+}
+
+public class RealizarAccion {
+    private String nombreAccion;
+    private String descripcion;
+    private String requisitos;
+
+    public void ejecutarAccion(Usuario usuario) {
+		}
+    public boolean verificarRequisitos(Usuario usuario) {
+		}
+}
