@@ -4,26 +4,33 @@ public class Usuario {
     private String contraseña;
     private double saldo;
 
-    public void registrarse() {
+    public void registrarse(String nombreUsuario,String correoElectronico,String contraseña) {
+	this.nombreUsuario=nombreUsusario;
+	this.correoElectronico=correoElectronico;
+	this.contraseña=contraseña;
 		}
-
-    public void iniciarSesion() {
-
-		}
+    public boolean iniciarSesion(String Usuario,String Correo,String Clave) {
+	boolean flag=true;
+	if (nombreUsuario!=Ususario || correoElectronico!=Correo || contraseña=Clave ){
+		flag=false;
+	}
+	return flag
+	}
     public void verPerfil() {
+	
 
     }
     public void realizarTransaccion() { 
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class Membresia {
     private String tipoMembresia;
     private double precioMensual;
     private String beneficios;
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class Rango {
     private String nombreRango;
     private String descripcion;
@@ -32,7 +39,7 @@ public class Rango {
     public boolean verificarRequisitos(Usuario usuario) { 
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class Juego {
     private String nombreJuego;
     private String descripcion;
@@ -43,7 +50,7 @@ public class Juego {
     public String obtenerInformacion() {
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class Categoria {
     private String nombreCategoria;
     private String descripcion;
@@ -52,7 +59,7 @@ public class Categoria {
 
     }
 }
-
+//---------------------------------------------------------------------------------
 public class Objeto {
     private String nombreObjeto;
     private String descripcion;
@@ -63,7 +70,7 @@ public class Objeto {
     public void comprarObjeto(Usuario usuario) {
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class Logro {
     private String nombreLogro;
     private String descripcion;
@@ -74,7 +81,7 @@ public class Logro {
     public List<Logro> verLogrosDesbloqueados(Usuario usuario) { 
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class RealizarTransaccion {
     private double cantidad;
     private Date fecha;
@@ -85,7 +92,7 @@ public class RealizarTransaccion {
     public void cancelarTransaccion() { 
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class MedioPago {
     private String tipoMedioPago;
     private String informacionCuenta;
@@ -95,7 +102,7 @@ public class MedioPago {
     public boolean verificarInformacion() { 
 		}
 }
-
+//---------------------------------------------------------------------------------
 public class RealizarAccion {
     private String nombreAccion;
     private String descripcion;
