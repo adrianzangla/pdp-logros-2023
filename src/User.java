@@ -1,39 +1,69 @@
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public class User {
     private String name;
-    private Map<String, Game> games;
+    private List<Game> games;
+    private List<Progress> progresses;
 
-    public User(String name, Map<String, Game> games) {
-        this.name = name;
-        this.games = games;
+    private Membership membership;
+
+    private Float experience;
+
+    private List<Item> items;
+
+    public Float getExperience() {
+        return experience;
+    }
+
+    public void buyGame(Game game) {
+        games.add(game);
+        List<Achievement> achievements = game.getAchievements();
+        for (Achievement achievement : achievements) {
+            Progress progress = new Progress(achievement);
+            progresses.add(progress);
+        }
+    }
+
+    private Boolean isComplete(List<Achievement> achievements) {
+        for (Achievement achievement : achievements) {
+            for (Progress progress : progresses) {
+                if (progress.getAchievement() == achievement) {
+                    if (!progress.getComplete()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void obtainReward(Achievement achievement) {
+        this.items.addAll(achievement.getReward().getItems());
     }
 
     public void performAction(Action action, Float times) {
-        if (games.containsKey(action.getGameName())) {
-            Game game = games.get(action.getGameName());
-            List<Achievement> achievements = game.getAchievements(action);
-            for (Achievement achievement : achievements) {
-                achievement.incrementProgress(times);
-            }
-        }
-    }
+        // Para cada Progress en progresses
+        for (Progress progress : progresses) {
+            Achievement achievement = progress.getAchievement();
+            if (
+                    achievement.getRankRequired().isRank(this)
+                    && achievement.getMembershipRequired() == this.membership
+                    && isComplete(achievement.getAchievementsRequired())
+            ) {
+                Map<Action, Float> value = progress.getValue();
+                // Si la accion pertenece al progreso
+                if (value.containsKey(action)) {
+                    Float currentValue = value.get(action);
+                    value.put(action, currentValue + times);
+                    Map<Action, Float> target = achievement.getTarget();
 
-    public void listAchievements() {
-        // Este metodo esta aca solo para probar. Pertenece a otra clase
-        Collection<Game> gamesCollection = games.values();
-        List<Achievement> achievements = null;
-        for (Game game : gamesCollection) {
-            achievements = game.getAllAchievements();
-        }
-        if (achievements != null) {
-            for (Achievement achievement : achievements) {
-                if (achievement.getComplete()) {
-                    System.out.println(achievement.getName());
+                    progress.setComplete(value.get(action) >= target.get(action));
+
+
                 }
             }
+
         }
     }
 

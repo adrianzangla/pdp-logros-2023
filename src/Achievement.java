@@ -1,28 +1,37 @@
+import java.util.List;
+import java.util.Map;
+
 public class Achievement {
-    private final String name;
-    private final Float target;
-    private Float progress;
-    private Boolean complete;
 
-    public Achievement(String name, Float target) {
-        this.name = name;
-        this.target = target;
-        progress = 0f;
-        complete = Boolean.FALSE;
+    private String name;
+    private Map<Action, Float> target;
+
+    private Rank rankRequired;
+
+    private Membership membershipRequired;
+
+    private List<Achievement> achievementsRequired;
+    private Reward reward;
+
+
+    public Reward getReward() {
+        return reward;
     }
 
-    public String getName() {
-        return this.name;
+    public Membership getMembershipRequired() {
+        return membershipRequired;
     }
 
-    public Boolean getComplete(){
-        return this.complete;
+    public List<Achievement> getAchievementsRequired() {
+        return achievementsRequired;
     }
 
-    public void incrementProgress(Float times) {
-        if (!complete) {
-            progress += times;
-            complete = target <= progress;
-        }
+    public Rank getRankRequired() {
+        return rankRequired;
     }
+
+    public Map<Action, Float> getTarget() {
+        return target;
+    }
+
 }
