@@ -1,22 +1,17 @@
-public abstract class Item {
+public class Skin extends Item {
+    private String content;
 
-    protected String name;
-    protected Integer price;
-
-    public Integer getPrice() {
-        return price;
+    public Skin(String name, Integer price, String content) {
+        super(name, price);
+        this.content = content;
     }
 
-    public Item(String name, Integer price) {
-        this.name = name;
+    @Override
+    public void use(User user) {
+        user.setNameStyle(content.replaceFirst("username", user.getName()));
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public abstract void use(User user);
-
+    @Override
     public void buy(User user) {
         if (user.getPoints() >= price) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
@@ -24,6 +19,7 @@ public abstract class Item {
         }
     }
 
+    @Override
     public void buy(User user, PaymentMethod payment) {
         if (payment.pay(this)) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);

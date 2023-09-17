@@ -1,22 +1,19 @@
-public abstract class Item {
+public class GameItem extends Item {
+    private Game game;
+    private double multiplier;
 
-    protected String name;
-    protected Integer price;
-
-    public Integer getPrice() {
-        return price;
+    public GameItem(String name, Integer price, Game game, double multiplier) {
+        super(name, price);
+        this.game = game;
+        this.multiplier = multiplier;
     }
 
-    public Item(String name, Integer price) {
-        this.name = name;
+    @Override
+    public void use(User user) {
+        user.getMultipliers().put(game, multiplier);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public abstract void use(User user);
-
+    @Override
     public void buy(User user) {
         if (user.getPoints() >= price) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
@@ -24,6 +21,7 @@ public abstract class Item {
         }
     }
 
+    @Override
     public void buy(User user, PaymentMethod payment) {
         if (payment.pay(this)) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
