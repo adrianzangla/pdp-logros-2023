@@ -1,5 +1,5 @@
 //Transaction es una clase abstracta de la cual se realiza herencia
-public class Transaction {
+public abstract class Transaction {
     private long idTransaction;
     private User issuingUser;
     private User receivingUser;
@@ -17,9 +17,6 @@ public class Transaction {
 
     public User getIssuingUser() {
         return issuingUser;
-    }
-    public void setIssuingUser(User issuingUser) {
-        this.issuingUser = issuingUser;
     }
 
     public User getReceivingUser() {

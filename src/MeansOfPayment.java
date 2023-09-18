@@ -2,6 +2,7 @@ public class MeansOfPayment {
     private String meanOfPay;
     private String payDescription;
     private Float balance;
+
     public MeansOfPayment(String meanOfPay,String payDescription,Float balance){
         this.meanOfPay=meanOfPay;
         this.payDescription=payDescription;
@@ -20,9 +21,6 @@ public class MeansOfPayment {
         return payDescription;
     }
 
-    public void setPayDescription(String payDescription) {
-        this.payDescription = payDescription;
-    }
 
     public Float getBalance() {
         return balance;

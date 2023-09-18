@@ -11,9 +11,18 @@ public class User {
     private Float experience;
 
     private List<Item> items;
+    private static List<MeansOfPayment>meansOfPayment;
 
     public Float getExperience() {
         return experience;
+    }
+
+    public static List<MeansOfPayment> getMeansOfPayment() {
+        return meansOfPayment;
+    }
+
+    public void setMeansOfPayment(List<MeansOfPayment> meansOfPayment) {
+        this.meansOfPayment = meansOfPayment;
     }
 
     public void buyGame(Game game) {
