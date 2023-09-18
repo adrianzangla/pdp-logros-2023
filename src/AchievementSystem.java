@@ -2,14 +2,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AchievementSystem {
+    //Atributos: lista de transacciones,lista de juegos,lista de usuarios,lista de rangos,lista de membresias,lista de objetos
     private static final List<Transaction> transactions = new LinkedList<>();
     private static final List<Game> games = new LinkedList<>();
     private static final List<User> users = new LinkedList<>();
     private static final List<Rank> ranks = new LinkedList<>();
     private static final List<Membership> memberships = new LinkedList<>();
     private static final List<Item> items = new LinkedList<>();
+    //metodo get que devuelve la lisa de transacciones
     private static List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public static List<User> getUsers() {
+        return users;
     }
 
     public static List<Game> getGames() {

@@ -22,16 +22,14 @@ public class User implements Transactionable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", nameStyle='" + nameStyle + '\'' +
-                ", achievements=" + achievements +
-                ", points=" + points +
-                ", rank=" + rank +
-                ", activeMembership=" + activeMembership +
-                ", paymentMethods=" + paymentMethods +
-                ", inventory=" + inventory +
-                ", multipliers=" + multipliers +
+        return nameStyle+" {" + '\n' +
+                " achievements=" + achievements + '\n' +
+                ", points=" + points + '\n' +
+                ", rank=" + rank + '\n' +
+                ", activeMembership=" + activeMembership + '\n' +
+                ", paymentMethods=" + paymentMethods + '\n' +
+                ", inventory=" + inventory + '\n' +
+                ", multipliers=" + multipliers + '\n' +
                 '}';
     }
 
