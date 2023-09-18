@@ -1,79 +1,108 @@
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class User {
+public class User implements Transactionable {
     private String name;
-    private List<Game> games;
-    private List<Progress> progresses;
+    private String nameStyle;
+    private final Map<Achievement, Double> achievements = new HashMap<>();
+    private Integer points;
+    private Rank rank;
+    private ActiveMembership activeMembership;
+    private final List<PaymentMethod> paymentMethods = new LinkedList<>();
+    private final Map<Item, Integer> inventory = new HashMap<>();
+    private final Map<Game, Double> multipliers = new HashMap<>();
 
-    private Membership membership;
 
-    private Float experience;
-
-    private List<Item> items;
-    private static List<MeansOfPayment>meansOfPayment;
-
-    public Float getExperience() {
-        return experience;
+    public User(String name) {
+        this.name = name;
+        this.nameStyle = name;
+        this.points = 0;
+        this.activeMembership=new ActiveMembership(Membership.getDefaultMembership(),-1);
+        this.rank=Rank.getDefaultRank();
     }
 
-    public static List<MeansOfPayment> getMeansOfPayment() {
-        return meansOfPayment;
+    @Override
+    public String toString() {
+        return nameStyle+" {" + '\n' +
+                " achievements=" + achievements + '\n' +
+                ", points=" + points + '\n' +
+                ", rank=" + rank + '\n' +
+                ", activeMembership=" + activeMembership + '\n' +
+                ", paymentMethods=" + paymentMethods + '\n' +
+                ", inventory=" + inventory + '\n' +
+                ", multipliers=" + multipliers + '\n' +
+                '}';
     }
 
-    public void setMeansOfPayment(List<MeansOfPayment> meansOfPayment) {
-        this.meansOfPayment = meansOfPayment;
+    public String getName() {
+        return "[" + activeMembership.getMembership().getName() + "]" + "[" + rank.getName() + "]" + name;
     }
 
-    public void buyGame(Game game) {
-        games.add(game);
-        List<Achievement> achievements = game.getAchievements();
-        for (Achievement achievement : achievements) {
-            Progress progress = new Progress(achievement);
-            progresses.add(progress);
-        }
+    public String getNameStyle() {
+        return "\n" + nameStyle + "\n";
     }
 
-    private Boolean isComplete(List<Achievement> achievements) {
-        for (Achievement achievement : achievements) {
-            for (Progress progress : progresses) {
-                if (progress.getAchievement() == achievement) {
-                    if (!progress.getComplete()) {
-                        return false;
-                    }
-                }
+    public Map<Achievement, Double> getAchievements() {
+        return achievements;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public ActiveMembership getActiveMembership() {
+        return activeMembership;
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public Map<Item, Integer> getInventory() {
+        return inventory;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Map<Game, Double> getMultipliers() {
+        return multipliers;
+    }
+
+    public void setNameStyle(String nameStyle) {
+        this.nameStyle = nameStyle;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public void setActiveMembership(Membership membership) {
+        this.activeMembership.setMembership(membership);
+        this.activeMembership.setHoursLeft(membership.getTime());
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+
+    @Override
+    public void transfer(Transactionable to, List<Item> items) {
+        List<Item> toTransfer = new LinkedList<>();
+        for (Item item : items) {
+            if (inventory.containsKey(item) && inventory.get(item) > 0) {
+                toTransfer.add(item);
+                inventory.put(item, inventory.get(item) - 1);
             }
         }
-        return true;
+        Transaction transaction = new Transaction(this, to, toTransfer);
+        AchievementSystem.addTransaction(transaction);
     }
 
-    private void obtainReward(Achievement achievement) {
-        this.items.addAll(achievement.getReward().getItems());
-    }
-
-    public void performAction(Action action, Float times) {
-        // Para cada Progress en progresses
-        for (Progress progress : progresses) {
-            Achievement achievement = progress.getAchievement();
-            if (
-                    achievement.getRankRequired().isRank(this)
-                    && achievement.getMembershipRequired() == this.membership
-                    && isComplete(achievement.getAchievementsRequired())
-            ) {
-                Map<Action, Float> value = progress.getValue();
-                // Si la accion pertenece al progreso
-                if (value.containsKey(action)) {
-                    Float currentValue = value.get(action);
-                    value.put(action, currentValue + times);
-                    Map<Action, Float> target = achievement.getTarget();
-
-                    progress.setComplete(value.get(action) >= target.get(action));
-
-
-                }
-            }
-
+    @Override
+    public void receive(List<Item> items) {
+        for (Item item : items) {
+            item.use(this);
         }
     }
-
 }
