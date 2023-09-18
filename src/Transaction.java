@@ -3,7 +3,7 @@ import java.util.List;
 public class Transaction {
     private Transactionable from;
     private Transactionable to;
-    private List<Item> items;
+    private final List<Item> items;
 
     public List<Item> getItems() {
         return items;

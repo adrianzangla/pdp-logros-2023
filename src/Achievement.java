@@ -1,17 +1,16 @@
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class Achievement implements Transactionable {
     private String name;
     private double target;
-    private List<Item> reward;
+    private final List<Item> reward = new LinkedList<>();
     private Rank rankRequired;
     private Membership membershipRequired;
 
-    public Achievement(String name, double target, List<Item> reward, Rank rankRequired, Membership membershipRequired) {
+    public Achievement(String name, double target, Rank rankRequired, Membership membershipRequired) {
         this.name = name;
         this.target = target;
-        this.reward = reward;
         this.rankRequired = rankRequired;
         this.membershipRequired = membershipRequired;
     }
@@ -19,12 +18,7 @@ public class Achievement implements Transactionable {
     @Override
     public String toString() {
         return "Achievement{" +
-                "name='" + name + '\'' +
-                ", target=" + target +
-                ", reward=" + reward +
-                ", rankRequired=" + rankRequired +
-                ", membershipRequired=" + membershipRequired +
-                '}';
+                "name='" + name + '\'';
     }
 
     public String getName() {
@@ -50,11 +44,12 @@ public class Achievement implements Transactionable {
             return;
         }
         double current = user.getAchievements().getOrDefault(this, 0d);
-        if (current >= target) {
-            current = -1d;
+        if (current + times >= target) {
+            user.getAchievements().put(this, -1d);
             transfer(user, reward);
+        } else {
+            user.getAchievements().put(this, current);
         }
-        user.getAchievements().put(this, current);
     }
 
     @Override

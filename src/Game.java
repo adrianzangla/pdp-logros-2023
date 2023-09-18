@@ -2,14 +2,14 @@ import java.util.*;
 
 public class Game {
     private String name;
-    private List<Action> actions;
+    private final List<Action> actions = new LinkedList<>();
 
     public Game(String name) {
         this.name = name;
     }
 
-    public void setActions(List<Action> actions) {
-        this.actions = actions;
+    public List<Action> getActions() {
+        return actions;
     }
 
     public void play(User user, Integer hours) {
@@ -22,4 +22,9 @@ public class Game {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' ;
+    }
 }

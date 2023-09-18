@@ -3,24 +3,20 @@ import java.util.*;
 public class User implements Transactionable {
     private String name;
     private String nameStyle;
-    private Map<Achievement, Double> achievements;
+    private final Map<Achievement, Double> achievements = new HashMap<>();
     private Integer points;
     private Rank rank;
     private ActiveMembership activeMembership;
-    private List<PaymentMethod> paymentMethods;
-    private Map<Item, Integer> inventory;
-    private Map<Game, Double> multipliers;
+    private final List<PaymentMethod> paymentMethods = new LinkedList<>();
+    private final Map<Item, Integer> inventory = new HashMap<>();
+    private final Map<Game, Double> multipliers = new HashMap<>();
 
 
     public User(String name) {
         this.name = name;
         this.nameStyle = name;
         this.points = 0;
-        this.achievements=new HashMap<>();
-        //membresia activa que tiene el usuario y horas que le quedan
         this.activeMembership=new ActiveMembership(Membership.getDefaultMembership(),-1);
-        this.inventory=new HashMap<>();
-        this.multipliers=new HashMap<>();
         this.rank=Rank.getDefaultRank();
     }
 

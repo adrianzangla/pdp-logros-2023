@@ -24,9 +24,10 @@ public class ActiveMembership {
     }
 
     public void decreaseHoursLeft() {
-        if (hoursLeft >= 1) {
-            hoursLeft--;
+        if (membership == Membership.getDefaultMembership()) {
+            return;
         }
+        hoursLeft--;
         if (hoursLeft < 1) {
             membership = Membership.getDefaultMembership();
             hoursLeft = -1;

@@ -1,12 +1,12 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Action {
     private String name;
-    private List<Achievement> achievements;
+    private final List<Achievement> achievements = new LinkedList<>();
 
-    public Action(String name, List<Achievement> achievements) {
+    public Action(String name) {
         this.name = name;
-        this.achievements = achievements;
     }
 
     public List<Achievement> getAchievements() {
