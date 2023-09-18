@@ -12,6 +12,9 @@ public class AchievementSystem {
         return transactions;
     }
 
+    public static List<Game> getGames() {
+        return games;
+    }
 
     public static void initialize() {
         List<Membership> memberships = new LinkedList<>();
@@ -83,16 +86,31 @@ public class AchievementSystem {
         Game minecraft = new Game("Minecraft");
         Game callOfDuty = new Game("Call of Duty");
         Game marioBros = new Game("Mario Bros");
+        //el indice con el que empiezan los items de juego es 12
         items.add(new GameItem("Diamond pickaxe", 1, minecraft, 2d));
         items.add(new GameItem("Netherite pickaxe", 2, minecraft, 3d));
         items.add(new GameItem("Chimera Assault Rifle", 1, callOfDuty, 2d));
         items.add(new GameItem("KV Broadside Shotgun", 2, callOfDuty, 3d));
         items.add(new GameItem("Super Mushroom", 1, marioBros, 2d));
         items.add(new GameItem("Fire Flower", 2, marioBros, 3d));
-        Achievement a0 = new Achievement()
-
-
-
+        //el indice con el que empiezan las bolsas es 18
+        items.add(new PointBag("SMALL Point bag", 2, 4));
+        items.add(new PointBag("MEDIUM Point bag", 4, 8));
+        items.add(new PointBag("BIG Point bag", 6, 12));
+        List<Item>itemsregalo=new LinkedList<>();
+        itemsregalo.add(items.get(0));
+        itemsregalo.add(items.get(13));
+        itemsregalo.add(items.get(18));
+        Achievement a0 = new Achievement("minar diamantes",5,itemsregalo,Rank.getDefaultRank(),Membership.getDefaultMembership());
+        List<Achievement>listAchievements=new LinkedList<>();
+        listAchievements.add(a0);
+        Action act0=new Action("minar",listAchievements);
+        List<Action>actions=new LinkedList<>();
+        actions.add(act0);
+        minecraft.setActions(actions);
+        List<Game>games=new LinkedList<>();
+        games.add(minecraft);
+        AchievementSystem.games=games;
 
     }
 

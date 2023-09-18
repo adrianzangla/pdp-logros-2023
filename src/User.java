@@ -16,6 +16,27 @@ public class User implements Transactionable {
         this.name = name;
         this.nameStyle = name;
         this.points = 0;
+        this.achievements=new HashMap<>();
+        //membresia activa que tiene el usuario y horas que le quedan
+        this.activeMembership=new ActiveMembership(Membership.getDefaultMembership(),-1);
+        this.inventory=new HashMap<>();
+        this.multipliers=new HashMap<>();
+        this.rank=Rank.getDefaultRank();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", nameStyle='" + nameStyle + '\'' +
+                ", achievements=" + achievements +
+                ", points=" + points +
+                ", rank=" + rank +
+                ", activeMembership=" + activeMembership +
+                ", paymentMethods=" + paymentMethods +
+                ", inventory=" + inventory +
+                ", multipliers=" + multipliers +
+                '}';
     }
 
     public String getName() {

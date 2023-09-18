@@ -6,8 +6,10 @@ public class Main {
 
 
         User u0 = new User("Adrian");
-
-        System.out.println(u0.getNameStyle());
-
+        AchievementSystem.initialize();
+        System.out.println(u0);
+        List<Game>Games=AchievementSystem.getGames();
+        Games.get(0).play(u0,50);
+        System.out.println(u0);
     }
 }

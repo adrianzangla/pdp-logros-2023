@@ -7,6 +7,10 @@ public class Rank extends Item {
         this.tier = tier;
     }
 
+    public static Rank getDefaultRank() {
+        return defaultRank;
+    }
+
     public int getTier() {
         return tier;
     }

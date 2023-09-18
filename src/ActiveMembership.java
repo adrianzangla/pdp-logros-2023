@@ -2,6 +2,11 @@ public class ActiveMembership {
     private Membership membership;
     private int hoursLeft;
 
+    public ActiveMembership(Membership membership, int hoursLeft) {
+        this.membership = membership;
+        this.hoursLeft = hoursLeft;
+    }
+
     public Membership getMembership() {
         return membership;
     }

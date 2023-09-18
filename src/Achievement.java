@@ -16,6 +16,17 @@ public class Achievement implements Transactionable {
         this.membershipRequired = membershipRequired;
     }
 
+    @Override
+    public String toString() {
+        return "Achievement{" +
+                "name='" + name + '\'' +
+                ", target=" + target +
+                ", reward=" + reward +
+                ", rankRequired=" + rankRequired +
+                ", membershipRequired=" + membershipRequired +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
@@ -29,7 +40,7 @@ public class Achievement implements Transactionable {
     }
 
     public void progress(User user, double times) {
-        if (user.getAchievements().get(this) < 0) {
+        if (user.getAchievements().getOrDefault(this,0d) < 0) {
             return;
         }
         if (user.getActiveMembership().getMembership() != membershipRequired) {
