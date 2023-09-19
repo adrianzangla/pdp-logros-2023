@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Membership extends Item {
     //atributos: multiplicador de puntos,duracion de la membresia,numero de membresia(cada membresia será referenciada por un numero entre 0 y 2)
     private static final Membership defaultMembership = new Membership("Regular", 0, 1d, -1, 0);

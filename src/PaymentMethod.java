@@ -1,6 +1,6 @@
 public abstract class PaymentMethod {
     //atributos: nombre
-    private String name;
+    private final String name;
 
     public PaymentMethod(String name) {
         this.name = name;

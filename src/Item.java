@@ -8,6 +8,7 @@ public abstract class Item {
     //constructor de "Item"
     public Item(String name, Integer price) {
         this.name = name;
+        this.price = price;
     }
     //metodo "get" que devuelve el precio del objeto
     public int getPrice() {

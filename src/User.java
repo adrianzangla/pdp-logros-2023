@@ -2,12 +2,12 @@ import java.util.*;
 
 public class User implements Sender, Receiver, Comparable<User> {
 //atributos: nombre,estilo de nombre,logros,puntos,rango,membresia activa,metodos de pago,inventario,multiplicadores
-    private String name;
+    private final String name;
     private String nameStyle;
     private final Map<Achievement, Integer> achievements = new HashMap<>();
     private int points;
     private Rank rank;
-    private ActiveMembership activeMembership;
+    private final ActiveMembership activeMembership = new ActiveMembership(Membership.getDefaultMembership(), -1);
     private final List<PaymentMethod> paymentMethods = new LinkedList<>();
     private final Map<Item, Integer> inventory = new HashMap<>();
     private final Map<Game, Double> multipliers = new HashMap<>();
@@ -18,7 +18,6 @@ public class User implements Sender, Receiver, Comparable<User> {
         this.name = name;
         this.nameStyle = name;
         this.points = 0;
-        this.activeMembership = new ActiveMembership(Membership.getDefaultMembership(), -1);
         this.rank = Rank.getDefaultRank();
         this.hoursPlayed = 0;
     }

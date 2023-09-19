@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Action {
     //Atributos:nombre,lista de logros
-    private String name;
+    private final String name;
     private final List<Achievement> achievements = new LinkedList<>();
     //colocar achievements en el constructor?
     public Action(String name) {

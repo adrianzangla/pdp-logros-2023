@@ -4,7 +4,7 @@ import java.util.List;
 public class Achievement implements Sender {
     //la clase logro implementa la interfaz transaccionable
     //Atributos: nombre,objetivo del logro,recompensa(lista de objetos),rango requerido,membresia requerida
-    private String name;
+    private final String name;
     private int target;
     private final List<Item> reward = new LinkedList<>();
     private Rank rankRequired;

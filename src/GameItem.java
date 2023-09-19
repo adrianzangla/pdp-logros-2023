@@ -1,6 +1,6 @@
 public class GameItem extends Item {
     //Atributos: juego,multiplicador
-    private Game game;
+    private final Game game;
     private double multiplier;
     //constructor de GameItem
     public GameItem(String name, Integer price, Game game, double multiplier) {

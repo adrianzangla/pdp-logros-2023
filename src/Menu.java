@@ -49,7 +49,7 @@ public class    Menu {
         }
     }
 
-    public static void selectUser() {
+    private static void selectUser() {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         while (true) {
@@ -72,7 +72,7 @@ public class    Menu {
         }
     }
 
-    public static void userMenu(User user) {
+    private static void userMenu(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         while (true) {
@@ -114,7 +114,7 @@ public class    Menu {
         }
     }
 
-    public static void createUser() {
+    private static void createUser() {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         String name;
         while (true) {
@@ -141,7 +141,7 @@ public class    Menu {
         }
     }
 
-    public static void playMenu(User user) {
+    private static void playMenu(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         int hours;
@@ -167,7 +167,7 @@ public class    Menu {
         }
     }
 
-    public static void inventoryMenu(User user) {
+    private static void inventoryMenu(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         int listIndex = 1;
@@ -204,7 +204,7 @@ public class    Menu {
         }
     }
 
-    public static void transferMenu(User user, Item item) {
+    private static void transferMenu(User user, Item item) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         int listIndex = 1;
@@ -228,7 +228,7 @@ public class    Menu {
         }
     }
 
-    public static void storeMenu(User user) {
+    private static void storeMenu(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         List<Item> items = Store.getItems();
         int listIndex = 1;

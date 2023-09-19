@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Game {
     //Atributos: nombre del juego,lista de acciones
-    private String name;
+    private final String name;
     private final List<Action> actions = new LinkedList<>();
     //constructor de Game
     public Game(String name) {
