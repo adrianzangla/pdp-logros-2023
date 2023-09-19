@@ -63,7 +63,6 @@ public class Achievement implements Sender {
     }
 
     @Override
-    //metodo transfer proveniente de la interfaz Transferable
     //realiza la transaccion y la anota en la lista de transacciones del sistema
     public void transfer(Receiver to, List<Item> items) {
         Transaction transaction = new Transaction(this, to);

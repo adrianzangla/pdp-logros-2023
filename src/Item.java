@@ -5,20 +5,20 @@ public abstract class Item {
     //Atributos: nombre del objeto,precio
     protected String name;
     protected Integer price;
-    //constructor de Item
+    //constructor de "Item"
     public Item(String name, Integer price) {
         this.name = name;
     }
-    //metodo get que devuelve el precio del objeto
+    //metodo "get" que devuelve el precio del objeto
     public Integer getPrice() {
         return price;
     }
 
-    //metodo get que devuelve el nombre del objeto
+    //metodo "get" que devuelve el nombre del objeto
     public String getName() {
         return name;
     }
-    //metodo abstracto que sera utilizado en las clases hijas de Item
+    //metodo abstracto "use" que sera utilizado en las clases hijas de Item
     public abstract void use(User user);
     protected boolean check(User user) {
         if (!user.getInventory().containsKey(this)) {

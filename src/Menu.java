@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Menu {
+public class    Menu {
 
     private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 9. Desde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
     private static final String options = "Seleccioná una opción:\n" +
