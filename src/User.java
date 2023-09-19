@@ -1,11 +1,7 @@
 import java.util.*;
-<<<<<<< HEAD
 
 public class User implements Sender, Receiver, Comparable<User> {
-=======
 //atributos: nombre,estilo de nombre,logros,puntos,rango,membresia activa,metodos de pago,inventario,multiplicadores
-public class User implements Sender, Receiver {
->>>>>>> ce3a8e42e2ee19d032f3bff0f4027307361cb534
     private String name;
     private String nameStyle;
     private final Map<Achievement, Integer> achievements = new HashMap<>();
