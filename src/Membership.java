@@ -33,21 +33,7 @@ public class Membership extends Item {
     @Override
     public void use(User user) {
         user.setActiveMembership(this);
-    }
-
-    @Override
-    public void buy(User user) {
-        if (user.getPoints() >= price) {
-            user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
-            user.setPoints(user.getPoints() - price);
-        }
-    }
-
-    @Override
-    public void buy(User user, PaymentMethod payment) {
-        if (payment.pay(this)) {
-            user.setActiveMembership(this);
-        }
+        user.getInventory().put(this, user.getInventory().get(this) - 1);
     }
 
 }

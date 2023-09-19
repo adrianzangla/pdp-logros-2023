@@ -1,7 +1,4 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
 
@@ -17,10 +14,13 @@ public class Menu {
     private static final String userOptions = "Seleccioná una opción" +
             "(1) Jugar" + '\n' +
             "(2) Mostrar inventario" + '\n' +
-            "(3) Consumir objeto" + '\n' +
-            "(4) Comprar objeto" + '\n' +
-            "(5) Mostrar logros" + '\n' +
-            "(6) Realizar transaccion" + '\n' +
+            "(3) Comprar objeto" + '\n' +
+            "(4) Mostrar logros" + '\n' +
+            "(5) Agregar método de pago" + '\n' +
+            "(0) Cancelar";
+
+    private static final String itemOptions = "(1) Usar" + "\n" +
+            "(2) Transferir" + "\n" +
             "(0) Cancelar";
 
     public static void mainMenu() {
@@ -35,7 +35,10 @@ public class Menu {
                 switch (option) {
                     case 1:
                         selectedUser = selectUser();
-                        userMenu(selectedUser);
+                        if (selectedUser != null) {
+                            userMenu(selectedUser);
+                        }
+                        break;
                     case 2:
                         createUser();
                         break;
@@ -46,17 +49,22 @@ public class Menu {
                 continue;
             }
         }
-
     }
 
     public static User selectUser() {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        int option;
         while (true) {
             for (int i = 0; i < AchievementSystem.getUsers().size(); i++) {
-                System.out.println("(" + i + ") " + AchievementSystem.getGames().get(i));
+                System.out.println("(" + i + 1 + ") " + AchievementSystem.getUsers().get(i).getNameStyle());
             }
+            System.out.println("(0) Cancelar");
             try {
-                return AchievementSystem.getUsers().get(sc.nextInt());
+                option = sc.nextInt();
+                if (option == 0) {
+                    return null;
+                }
+                return AchievementSystem.getUsers().get(option - 1);
             } catch (Exception e) {
                 continue;
             }
@@ -67,6 +75,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         while (true) {
+            System.out.println(user.getNameStyle());
             System.out.println(userOptions);
             try {
                 option = sc.nextInt();
@@ -75,31 +84,15 @@ public class Menu {
                         playMenu(user);
                         break;
                     case 2:
-                        System.out.println("Inventario: "+'\n'+user.getInventory());
+                        System.out.println("Inventario:");
+                        System.out.println("Seleccioná un objeto:");
+                        inventoryMenu(user);
                         break;
                     case 3:
+                        System.out.println("Tienda");
+                        System.out.println("Seleccione un objeto");
+                        storeMenu(user);
 
-                    case 4:
-
-                    case 5:
-                        System.out.println("Logros: "+'\n'+user.getAchievements());
-                        break;
-                    case 6:
-                        User receiverUser=selectUser();
-                        List<Item> itemsList=new LinkedList<>();
-                        for (int i = 0; i < user.getInventory().size(); i++) {
-                            System.out.println("(" + i + ") " + user.getInventory().get(i));
-                            try {
-                                //como referencio a la key de un map?
-                                //itemsList.add(user.getInventory().get(sc.nextInt()));
-                            } catch (Exception e) {
-                                continue;
-                            }
-                        }
-                        user.transfer(receiverUser, itemsList);
-                        break;
-                    case 0:
-                        break;
                 }
             } catch (Exception e) {
                 continue;
@@ -128,8 +121,6 @@ public class Menu {
                 continue;
             }
         }
-
-
     }
 
     public static void playMenu(User user) {
@@ -137,19 +128,121 @@ public class Menu {
         int option;
         int hours;
         while (true) {
-            System.out.println("¿Cuántas horas?");
-            hours = sc.nextInt();
-            for (int i = 0; i < AchievementSystem.getGames().size(); i++) {
-                System.out.println("(" + i + ") " + AchievementSystem.getGames().get(i));
-            }
-            System.out.println("(0) Cancelar");
             try {
-                AchievementSystem.getGames().get(sc.nextInt()).play(user, hours);
-
+                System.out.println("¿Cuántas horas?");
+                hours = sc.nextInt();
+                for (int i = 0; i < AchievementSystem.getGames().size(); i++) {
+                    System.out.println("(" + i + 1 + ") " + "\t" + AchievementSystem.getGames().get(i));
+                }
+                System.out.println("(0) Cancelar");
+                option = sc.nextInt();
+                if (option == 0) {
+                    return;
+                }
+                AchievementSystem.getGames().get(option - 1).play(user, hours);
             } catch (Exception e) {
                 continue;
             }
         }
+    }
+
+    public static void inventoryMenu(User user) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        int option;
+        int listIndex = 1;
+        Item selectedItem;
+        List<Item> items = new ArrayList<>();
+        while (true) {
+            for (Item item : user.getInventory().keySet()) {
+                if (user.getInventory().get(item) > 0) {
+                    System.out.println("(" + listIndex + ")" + "\t" + item.getName() + "\t" + user.getInventory().get(item));
+                    items.add(item);
+                    listIndex++;
+                }
+            }
+            try {
+                System.out.println("(0) Cancelar");
+                option = sc.nextInt();
+                if (option == 0) {
+                    return;
+                }
+                selectedItem = items.get(option - 1);
+                System.out.println(selectedItem);
+                System.out.println(itemOptions);
+                option = sc.nextInt();
+                if (option == 0) {
+                    return;
+                }
+                if (option == 1) {
+                    selectedItem.use(user);
+                }
+                if (option == 2) {
+                    transferMenu(user, selectedItem);
+                }
+            } catch (Exception e) {
+                continue;
+            }
+
+        }
+    }
+
+    public static void transferMenu(User user, Item item) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        int option;
+        int listIndex = 1;
+        List<User> users = new ArrayList<>();
+        while (true) {
+            for (User otherUser : AchievementSystem.getUsers()) {
+                if (otherUser != user) {
+                    System.out.println("(" + listIndex + ")" + "\t" + otherUser.getNameStyle());
+                    users.add(otherUser);
+                    listIndex++;
+                }
+            }
+            try {
+                option = sc.nextInt();
+                List<Item> itemList = new LinkedList<>();
+                itemList.add(item);
+                user.transfer(users.get(option - 1), itemList);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+    }
+
+    public static void storeMenu(User user) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        List<Item> items = Store.getItems();
+        int listIndex = 1;
+        int option;
+        Item selectedItem;
+        while (true) {
+            for (Item item : items) {
+                System.out.println("(" + listIndex + ")" + "\t" + item.toString());
+                listIndex++;
+            }
+            System.out.println("(0) Cancelar");
+            try {
+                option = sc.nextInt();
+                if (option == 0) {
+                    return;
+                }
+                selectedItem = items.get(option - 1);
+                System.out.println(selectedItem.toString());
+                System.out.println("(1) Comprar");
+                System.out.println("(0) Cancelar");
+                option = sc.nextInt();
+                if (option == 0) {
+                    continue;
+                }
+                List<Item> selectedItemList = new LinkedList<>();
+                selectedItemList.add(selectedItem);
+                AchievementSystem.getStore().transfer(user, selectedItemList);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+
 
     }
 

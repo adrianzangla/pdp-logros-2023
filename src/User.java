@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class User implements Sender, Receiver{
+public class User implements Sender, Receiver {
     private String name;
     private String nameStyle;
     private final Map<Achievement, Integer> achievements = new HashMap<>();
@@ -16,13 +16,13 @@ public class User implements Sender, Receiver{
         this.name = name;
         this.nameStyle = name;
         this.points = 0;
-        this.activeMembership=new ActiveMembership(Membership.getDefaultMembership(),-1);
-        this.rank=Rank.getDefaultRank();
+        this.activeMembership = new ActiveMembership(Membership.getDefaultMembership(), -1);
+        this.rank = Rank.getDefaultRank();
     }
 
     @Override
     public String toString() {
-        return nameStyle+" {" + '\n' +
+        return nameStyle + " {" + '\n' +
                 " achievements=" + achievements + '\n' +
                 ", points=" + points + '\n' +
                 ", rank=" + rank + '\n' +
@@ -38,7 +38,7 @@ public class User implements Sender, Receiver{
     }
 
     public String getNameStyle() {
-        return "\n" + nameStyle + "\n";
+        return nameStyle;
     }
 
     public Map<Achievement, Integer> getAchievements() {
@@ -85,6 +85,7 @@ public class User implements Sender, Receiver{
     public void setRank(Rank rank) {
         this.rank = rank;
     }
+
 
     @Override
     public void transfer(Receiver to, List<Item> items) {

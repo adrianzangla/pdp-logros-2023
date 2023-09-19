@@ -14,7 +14,7 @@ public class Action {
         return achievements;
     }
     //metodo que aumenta el progreso del logro del usuario,segun la cantidad de veces que realiza la acción
-    public void perform(User user, double times) {
+    public void perform(User user, int times) {
         for (Achievement achievement : achievements) {
             achievement.progress(user, times);
         }

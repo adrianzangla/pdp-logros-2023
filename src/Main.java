@@ -66,12 +66,10 @@ public class Main {
                     System.out.println("su usuario fue creado con exito!");
                 case 2:
                     //se le ofrecen opciones que solo puede realizar si su usuario esta creado
-                    Menu.menuOptions();
                 case 4:
                     //sale del sistema de logros
                     resp=true;
         }
-
 
         }
     }

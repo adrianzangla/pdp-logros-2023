@@ -36,7 +36,7 @@ public class Achievement implements Sender {
         return reward;
     }
     //metodo progreso que gestiona el avance del logro dependiendo su situacion
-    public void progress(User user, double times) {
+    public void progress(User user, int times) {
         //analiza si el metodo esta cumplido o no(times<0 -> cumplido)
         if (user.getAchievements().getOrDefault(this,0) < 0) {
             return;
@@ -58,7 +58,7 @@ public class Achievement implements Sender {
             transfer(user, reward);
         } else {
             //si el progreso actualizado no es mayor,guarda el progreso actualizado del logro
-            user.getAchievements().put(this, current);
+            user.getAchievements().put(this, current + times);
         }
     }
 
@@ -67,7 +67,7 @@ public class Achievement implements Sender {
     //realiza la transaccion y la anota en la lista de transacciones del sistema
     public void transfer(Receiver to, List<Item> items) {
         Transaction transaction = new Transaction(this, to);
-        transaction.getItems().addAll(reward);
+        transaction.getItems().addAll(items);
         AchievementSystem.addTransaction(transaction);
     }
 }

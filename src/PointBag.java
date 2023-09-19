@@ -8,6 +8,12 @@ public class PointBag extends Item {
     @Override
     public void use(User user) {
         user.setPoints((int) (user.getPoints() + value * user.getActiveMembership().getMembership().getPointMultiplier()));
+        user.getInventory().put(this, user.getInventory().get(this) - 1);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "Puntos: " + value;
+    }
 }

@@ -1,14 +1,14 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class AchievementSystem {
+public class AchievementSystem implements Sender {
     //Atributos: lista de transacciones,lista de juegos,lista de usuarios,lista de rangos,lista de membresias,lista de objetos
     private static final List<Transaction> transactions = new LinkedList<>();
     private static final List<Game> games = new LinkedList<>();
     private static final List<User> users = new LinkedList<>();
     private static final List<Rank> ranks = new LinkedList<>();
     private static final List<Membership> memberships = new LinkedList<>();
-    private static final List<Item> items = new LinkedList<>();
+    private static final Store store = new Store();
 
     //metodo get que devuelve la lisa de transacciones
     private static List<Transaction> getTransactions() {
@@ -23,7 +23,12 @@ public class AchievementSystem {
         return games;
     }
 
+    public static Store getStore() {
+        return store;
+    }
+
     public static void initialize() {
+        List<Item> items = Store.getItems();
         memberships.add(new Membership("Preferencial", 1, 2d, 24*30, 1));
         memberships.add(new Membership("VIP", 2, 4d, 24*30, 2));
         ranks.add(new Rank("Pro", 1, 1));
@@ -98,9 +103,9 @@ public class AchievementSystem {
         items.add(new GameItem("Super Mushroom", 1, games.get(2), 2d));
         items.add(new GameItem("Fire Flower", 2, games.get(2), 3d));
         //[18-20]
-        items.add(new PointBag("Small Point Bag", 1, 1));
-        items.add(new PointBag("Medium Point Bag", 2, 2));
-        items.add(new PointBag("Big Point Bag", 3, 3));
+        items.add(new PointBag("Pequeña bolsa de puntos", 1, 1));
+        items.add(new PointBag("Bolsa de puntos", 2, 2));
+        items.add(new PointBag("Gran bolsa de puntos", 3, 3));
         //Minecraft
         games.get(0).getActions().add(new Action("Mine diamonds"));
         games.get(0).getActions().get(0).getAchievements().add(new Achievement("2 Diamonds!",2, Rank.getDefaultRank(), Membership.getDefaultMembership()));
@@ -257,7 +262,6 @@ public class AchievementSystem {
         games.get(2).getActions().get(2).getAchievements().get(4).getReward().add(items.get(8));
         games.get(2).getActions().get(2).getAchievements().get(4).getReward().add(items.get(20));
 
-
     }
 
     public static void addTransaction(Transaction transaction) {
@@ -269,4 +273,12 @@ public class AchievementSystem {
         transaction.getTo().receive(wrappedItems);
     }
 
+    @Override
+    public void transfer(Receiver to, List<Item> items) {
+        staticTransfer(to, items);
+    }
+
+    public static void staticTransfer(Receiver to, List<Item> items) {
+
+    }
 }

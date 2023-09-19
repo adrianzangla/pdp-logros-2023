@@ -24,7 +24,7 @@ public class Game {
         for (int i = 0; i < hours; i++) {
             Action action = actions.get(random.nextInt(actions.size()));
             int times = (int) (random.nextInt(action.getAchievements().get(random.nextInt(action.getAchievements().size())).getTarget()) * user.getMultipliers().getOrDefault(this, 1d));
-            action.perform(user, hours);
+            action.perform(user, times);
             user.getActiveMembership().decreaseHoursLeft();
         }
     }

@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class Item {
     //Atributos: nombre del objeto,precio
     protected String name;
@@ -19,8 +22,10 @@ public abstract class Item {
     public abstract void use(User user);
     public void buy(User user) {
         if (user.getPoints() >= price) {
-            user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
             user.setPoints(user.getPoints() - price);
+            List<Item> itemList = new LinkedList<>();
+            itemList.add(this);
+            AchievementSystem.getStore().transfer(user, itemList);
         }
     }
 
@@ -28,5 +33,11 @@ public abstract class Item {
         if (payment.pay(this)) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Objeto: " + name + '\n' +
+                "Precio: " + price + '\n';
     }
 }
