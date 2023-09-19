@@ -13,7 +13,11 @@ public class GameItem extends Item {
     //metodo abstracto use que proviene de Item
     //ubica en el map de multiplier el multiplicador que se le aplica al juego
     public void use(User user) {
-        user.getMultipliers().put(game, multiplier);
+        if (check(user)) {
+            user.getMultipliers().put(game, multiplier);
+            user.getInventory().put(this, user.getInventory().get(this) - 1);
+        }
+        check(user);
     }
 
     @Override

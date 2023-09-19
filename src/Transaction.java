@@ -20,6 +20,7 @@ public class Transaction {
         return to;
     }
 
-
-
+    public Sender getFrom() {
+        return from;
+    }
 }

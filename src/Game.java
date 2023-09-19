@@ -27,6 +27,7 @@ public class Game {
             action.perform(user, times);
             user.getActiveMembership().decreaseHoursLeft();
         }
+        user.setHoursPlayed(user.getHoursPlayed() + hours);
     }
 
     @Override

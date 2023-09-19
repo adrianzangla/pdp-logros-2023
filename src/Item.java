@@ -20,18 +20,35 @@ public abstract class Item {
     }
     //metodo abstracto que sera utilizado en las clases hijas de Item
     public abstract void use(User user);
-    public void buy(User user) {
+    protected boolean check(User user) {
+        if (!user.getInventory().containsKey(this)) {
+            return false;
+        }
+        if (user.getInventory().get(this) < 1) {
+            user.getInventory().remove(this);
+            return false;
+        }
+        return true;
+    }
+
+    public void buy(User user) throws AchievementSystemException {
         if (user.getPoints() >= price) {
             user.setPoints(user.getPoints() - price);
             List<Item> itemList = new LinkedList<>();
             itemList.add(this);
             AchievementSystem.getStore().transfer(user, itemList);
+        } else {
+            throw new AchievementSystemException("No tenés suficientes puntos");
         }
     }
 
-    public void buy(User user, PaymentMethod payment) {
+    public void buy(User user, PaymentMethod payment) throws AchievementSystemException {
         if (payment.pay(this)) {
-            user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
+            List<Item> itemList = new LinkedList<>();
+            itemList.add(this);
+            AchievementSystem.getStore().transfer(user, itemList);
+        } else {
+            throw new AchievementSystemException("No tenés suficientes dinero");
         }
     }
 

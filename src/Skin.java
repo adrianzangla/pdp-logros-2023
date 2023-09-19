@@ -8,7 +8,9 @@ public class Skin extends Item {
 
     @Override
     public void use(User user) {
-        user.setNameStyle(content.replaceFirst("username", user.getName()));
+        if (check(user)) {
+            user.setNameStyle(content.replaceFirst("username", user.getName()));
+        }
     }
 
 }

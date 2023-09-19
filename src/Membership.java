@@ -32,8 +32,15 @@ public class Membership extends Item {
 
     @Override
     public void use(User user) {
-        user.setActiveMembership(this);
-        user.getInventory().put(this, user.getInventory().get(this) - 1);
+        if (check(user)) {
+            if (user.getActiveMembership().getMembership().getTier() < tier) {
+                user.setActiveMembership(this);
+            } else {
+                user.getActiveMembership().setHoursLeft(user.getActiveMembership().getHoursLeft() + 15*24);
+            }
+            user.getInventory().put(this, user.getInventory().get(this) - 1);
+        }
+        check(user);
     }
 
 }

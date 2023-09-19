@@ -2,7 +2,8 @@ public class CreditCard extends PaymentMethod {
     //Atributos: limite
     private Double limit;
 
-    public CreditCard(Double limit) {
+    public CreditCard(String name, Double limit) {
+        super(name);
         this.limit = limit;
     }
 

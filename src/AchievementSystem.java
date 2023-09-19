@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class AchievementSystem implements Sender {
+public class AchievementSystem {
     //Atributos: lista de transacciones,lista de juegos,lista de usuarios,lista de rangos,lista de membresias,lista de objetos
     private static final List<Transaction> transactions = new LinkedList<>();
     private static final List<Game> games = new LinkedList<>();
@@ -11,7 +11,7 @@ public class AchievementSystem implements Sender {
     private static final Store store = new Store();
 
     //metodo get que devuelve la lisa de transacciones
-    private static List<Transaction> getTransactions() {
+    public static List<Transaction> getTransactions() {
         return transactions;
     }
 
@@ -271,14 +271,5 @@ public class AchievementSystem implements Sender {
             wrappedItems.add(new Gift(item));
         }
         transaction.getTo().receive(wrappedItems);
-    }
-
-    @Override
-    public void transfer(Receiver to, List<Item> items) {
-        staticTransfer(to, items);
-    }
-
-    public static void staticTransfer(Receiver to, List<Item> items) {
-
     }
 }

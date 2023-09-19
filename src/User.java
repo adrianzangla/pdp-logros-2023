@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class User implements Sender, Receiver {
+public class User implements Sender, Receiver, Comparable<User> {
     private String name;
     private String nameStyle;
     private final Map<Achievement, Integer> achievements = new HashMap<>();
@@ -10,6 +10,7 @@ public class User implements Sender, Receiver {
     private final List<PaymentMethod> paymentMethods = new LinkedList<>();
     private final Map<Item, Integer> inventory = new HashMap<>();
     private final Map<Game, Double> multipliers = new HashMap<>();
+    private int hoursPlayed;
 
 
     public User(String name) {
@@ -18,6 +19,15 @@ public class User implements Sender, Receiver {
         this.points = 0;
         this.activeMembership = new ActiveMembership(Membership.getDefaultMembership(), -1);
         this.rank = Rank.getDefaultRank();
+        this.hoursPlayed = 0;
+    }
+
+    public int getHoursPlayed() {
+        return hoursPlayed;
+    }
+
+    public void setHoursPlayed(int hoursPlayed) {
+        this.hoursPlayed = hoursPlayed;
     }
 
     @Override
@@ -91,10 +101,11 @@ public class User implements Sender, Receiver {
     public void transfer(Receiver to, List<Item> items) {
         List<Item> toTransfer = new LinkedList<>();
         for (Item item : items) {
-            if (inventory.containsKey(item) && inventory.get(item) > 0) {
+            if (item.check(this)) {
                 toTransfer.add(item);
-                inventory.put(item, inventory.get(item) - 1);
             }
+            inventory.put(item, inventory.get(item) - 1);
+            item.check(this);
         }
         Transaction transaction = new Transaction(this, to);
         transaction.getItems().addAll(toTransfer);
@@ -106,5 +117,10 @@ public class User implements Sender, Receiver {
         for (Item item : items) {
             item.use(this);
         }
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return Integer.compare(points, o.getPoints());
     }
 }

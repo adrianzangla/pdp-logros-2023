@@ -22,7 +22,14 @@ public class Rank extends Item {
     //si los puntos del usuario son menores al precio del rango,retorna para que no haga nada ya que no lo puede comprar
     //si no,utiliza el metodo set para actualizar el rango del usuario
     public void use(User user) {
-        user.setRank(this);
-        user.getInventory().put(this, user.getInventory().get(this) - 1);
+        if (check(user)) {
+            if (user.getRank().getTier() < tier) {
+                user.setRank(this);
+            } else {
+                user.setPoints(user.getPoints() + tier);
+            }
+            user.getInventory().put(this, user.getInventory().get(this) - 1);
+        }
+        check(user);
     }
 }
