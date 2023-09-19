@@ -1,9 +1,11 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Menu {
-    //somos el grupo 10???
-    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 10. Desde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
+
+    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 9. Desde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
     private static final String options = "Seleccioná una opción:\n" +
             "(1) Elegir un usuario\n" +
             "(2) Crear un usuario\n" +
@@ -33,7 +35,7 @@ public class Menu {
                 switch (option) {
                     case 1:
                         selectedUser = selectUser();
-                        userMenu();
+                        userMenu(selectedUser);
                     case 2:
                         createUser();
                         break;
@@ -61,7 +63,7 @@ public class Menu {
         }
     }
 
-    public static void userMenu() {
+    public static void userMenu(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int option;
         while (true) {
@@ -70,7 +72,33 @@ public class Menu {
                 option = sc.nextInt();
                 switch (option) {
                     case 1:
-                        playMenu();
+                        playMenu(user);
+                        break;
+                    case 2:
+                        System.out.println("Inventario: "+'\n'+user.getInventory());
+                        break;
+                    case 3:
+
+                    case 4:
+
+                    case 5:
+                        System.out.println("Logros: "+'\n'+user.getAchievements());
+                        break;
+                    case 6:
+                        User receiverUser=selectUser();
+                        List<Item> itemsList=new LinkedList<>();
+                        for (int i = 0; i < user.getInventory().size(); i++) {
+                            System.out.println("(" + i + ") " + user.getInventory().get(i));
+                            try {
+                                //como referencio a la key de un map?
+                                //itemsList.add(user.getInventory().get(sc.nextInt()));
+                            } catch (Exception e) {
+                                continue;
+                            }
+                        }
+                        user.transfer(receiverUser, itemsList);
+                        break;
+                    case 0:
                         break;
                 }
             } catch (Exception e) {
@@ -118,6 +146,8 @@ public class Menu {
             try {
                 AchievementSystem.getGames().get(sc.nextInt()).play(user, hours);
 
+            } catch (Exception e) {
+                continue;
             }
         }
 

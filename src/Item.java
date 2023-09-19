@@ -17,7 +17,6 @@ public abstract class Item {
     }
     //metodo abstracto que sera utilizado en las clases hijas de Item
     public abstract void use(User user);
-    //metodo buy que
     public void buy(User user) {
         if (user.getPoints() >= price) {
             user.getInventory().put(this, user.getInventory().getOrDefault(this, 0) + 1);
