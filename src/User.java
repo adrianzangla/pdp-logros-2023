@@ -1,9 +1,9 @@
 import java.util.*;
 
-public class User implements Transactionable {
+public class User implements Sender, Receiver{
     private String name;
     private String nameStyle;
-    private final Map<Achievement, Double> achievements = new HashMap<>();
+    private final Map<Achievement, Integer> achievements = new HashMap<>();
     private Integer points;
     private Rank rank;
     private ActiveMembership activeMembership;
@@ -41,7 +41,7 @@ public class User implements Transactionable {
         return "\n" + nameStyle + "\n";
     }
 
-    public Map<Achievement, Double> getAchievements() {
+    public Map<Achievement, Integer> getAchievements() {
         return achievements;
     }
 
@@ -87,7 +87,7 @@ public class User implements Transactionable {
     }
 
     @Override
-    public void transfer(Transactionable to, List<Item> items) {
+    public void transfer(Receiver to, List<Item> items) {
         List<Item> toTransfer = new LinkedList<>();
         for (Item item : items) {
             if (inventory.containsKey(item) && inventory.get(item) > 0) {
@@ -95,7 +95,8 @@ public class User implements Transactionable {
                 inventory.put(item, inventory.get(item) - 1);
             }
         }
-        Transaction transaction = new Transaction(this, to, toTransfer);
+        Transaction transaction = new Transaction(this, to);
+        transaction.getItems().addAll(toTransfer);
         AchievementSystem.addTransaction(transaction);
     }
 

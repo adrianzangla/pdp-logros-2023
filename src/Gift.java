@@ -1,6 +1,6 @@
 public class Gift extends Item {
     //Atributos: objeto
-    private Item item;
+    private final Item item;
     //constructor de Gift
     public Gift(Item item) {
         super(item.getName() + "Gift", 0);

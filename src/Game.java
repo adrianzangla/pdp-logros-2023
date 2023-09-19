@@ -8,6 +8,11 @@ public class Game {
     public Game(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
     //metodo get que devuelve la lista de acciones pertenecientes al juego
     public List<Action> getActions() {
         return actions;
@@ -18,7 +23,7 @@ public class Game {
         Random random = new Random();
         for (int i = 0; i < hours; i++) {
             Action action = actions.get(random.nextInt(actions.size()));
-            double times = random.nextDouble(action.getAchievements().get(random.nextInt(action.getAchievements().size())).getTarget()) * user.getMultipliers().getOrDefault(this, 1d);
+            int times = (int) (random.nextInt(action.getAchievements().get(random.nextInt(action.getAchievements().size())).getTarget()) * user.getMultipliers().getOrDefault(this, 1d));
             action.perform(user, hours);
             user.getActiveMembership().decreaseHoursLeft();
         }
