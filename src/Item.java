@@ -4,13 +4,13 @@ import java.util.List;
 public abstract class Item {
     //Atributos: nombre del objeto,precio
     protected String name;
-    protected Integer price;
+    protected int price;
     //constructor de "Item"
     public Item(String name, Integer price) {
         this.name = name;
     }
     //metodo "get" que devuelve el precio del objeto
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 

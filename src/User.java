@@ -5,7 +5,7 @@ public class User implements Sender, Receiver, Comparable<User> {
     private String name;
     private String nameStyle;
     private final Map<Achievement, Integer> achievements = new HashMap<>();
-    private Integer points;
+    private int points;
     private Rank rank;
     private ActiveMembership activeMembership;
     private final List<PaymentMethod> paymentMethods = new LinkedList<>();
@@ -56,7 +56,7 @@ public class User implements Sender, Receiver, Comparable<User> {
         return achievements;
     }
     //metodo "get" que devuelve los puntos
-    public Integer getPoints() {
+    public int getPoints() {
         return points;
     }
     //metodo "get" que devuelve la membresia que el usuario utiliza actualmente

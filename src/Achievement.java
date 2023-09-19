@@ -16,14 +16,6 @@ public class Achievement implements Sender {
         this.rankRequired = rankRequired;
         this.membershipRequired = membershipRequired;
     }
-
-    @Override
-    //metodo toString que devuelve la forma en la que va a imprimir lo que se le indica
-    public String toString() {
-        return "Achievement{" +
-                "name='" + name + '\'';
-    }
-    //metodo get que devuelve el nombre del logro
     public String getName() {
         return name;
     }
@@ -49,7 +41,6 @@ public class Achievement implements Sender {
         if (user.getRank().getTier() < rankRequired.getTier()) {
             return;
         }
-
         int current = user.getAchievements().getOrDefault(this, 0);
         if (current + times >= target) {
             //si el progreso actualizado es mayor que el objetivo coloca times en negativo para indicar que ya se cumplió el logro
@@ -61,7 +52,6 @@ public class Achievement implements Sender {
             user.getAchievements().put(this, current + times);
         }
     }
-
     @Override
     //realiza la transaccion y la anota en la lista de transacciones del sistema
     public void transfer(Receiver to, List<Item> items) {

@@ -236,7 +236,7 @@ public class    Menu {
         Item selectedItem;
         while (true) {
             for (Item item : items) {
-                System.out.println("(" + listIndex + ")" + "\t" + item.toString());
+                System.out.println("(" + listIndex + ")" + "\t" + item.getName());
                 listIndex++;
             }
             System.out.println("(0) Cancelar");
@@ -360,7 +360,7 @@ public class    Menu {
                 String name = sc.nextLine();
                 System.out.println("Ingresá el balance (No mientas)");
                 Double limit = sc.nextDouble();
-                user.getPaymentMethods().add(new CreditCard(name, limit));
+                user.getPaymentMethods().add(new DebitCard(name, limit));
             } catch (Exception e) {
                 continue;
             }

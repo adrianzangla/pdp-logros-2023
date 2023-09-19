@@ -1,6 +1,6 @@
 public class DebitCard extends PaymentMethod {
     //Atributos: dinero
-    private Double balance;
+    private double balance;
 
     public DebitCard(String name, Double balance) {
         super(name);

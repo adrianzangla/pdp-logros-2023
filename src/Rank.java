@@ -32,4 +32,10 @@ public class Rank extends Item {
         }
         check(user);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "Nivel: " + tier + "\n";
+    }
 }

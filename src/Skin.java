@@ -14,4 +14,8 @@ public class Skin extends Item {
         }
     }
 
+    @Override
+    public String toString() {
+        return content;
+    }
 }

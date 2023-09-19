@@ -8,7 +8,6 @@ public class Game {
     public Game(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }

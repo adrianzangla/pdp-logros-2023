@@ -45,4 +45,10 @@ public class Membership extends Item {
         check(user);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "Ventaja: x" + pointMultiplier + "\n" +
+                "Nivel: " + tier + "\n";
+    }
 }
