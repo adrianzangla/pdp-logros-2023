@@ -12,11 +12,11 @@ public class Game {
         return name;
     }
 
-    //metodo get que devuelve la lista de acciones pertenecientes al juego
+    //metodo "get" que devuelve la lista de acciones pertenecientes al juego
     public List<Action> getActions() {
         return actions;
     }
-    //metodo play que simula la ejecucion de un juego con una accion a azar realizada un numero al azar de veces
+    //metodo "play" que simula la ejecucion de un juego con una accion al azar realizada un numero al azar de veces
     //tambien decrementa las horas de vida de la membresia del usuario si esta es referencial o vip
     public void play(User user, Integer hours) {
         Random random = new Random();
@@ -30,7 +30,7 @@ public class Game {
     }
 
     @Override
-    //metodo toString que devuelve la forma en la que va a imprimir lo que se le indica
+    //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
     public String toString() {
         return "Game{" +
                 "name='" + name + '\'' ;

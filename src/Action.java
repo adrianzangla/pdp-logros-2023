@@ -5,15 +5,15 @@ public class Action {
     //Atributos:nombre,lista de logros
     private final String name;
     private final List<Achievement> achievements = new LinkedList<>();
-    //colocar achievements en el constructor?
+    //constructor de "Action"
     public Action(String name) {
         this.name = name;
     }
-    //metodo get que devuelve la lista de logros
+    //metodo "get" que devuelve la lista de logros
     public List<Achievement> getAchievements() {
         return achievements;
     }
-    //metodo que aumenta el progreso del logro del usuario,segun la cantidad de veces que realiza la acción
+    //metodo "perform" que aumenta el progreso del logro del usuario,segun la cantidad de veces que realiza la acción
     public void perform(User user, int times) {
         for (Achievement achievement : achievements) {
             achievement.progress(user, times);

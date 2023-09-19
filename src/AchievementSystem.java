@@ -10,23 +10,23 @@ public class AchievementSystem {
     private static final List<Membership> memberships = new LinkedList<>();
     private static final Store store = new Store();
 
-    //metodo get que devuelve la lisa de transacciones
+    //metodo "get" que devuelve la lista de transacciones
     public static List<Transaction> getTransactions() {
         return transactions;
     }
-
+    //metodo "get" que devuelve la lista de usuarios
     public static List<User> getUsers() {
         return users;
     }
-
+    //metodo "get" que devuelve  la lista de juegos
     public static List<Game> getGames() {
         return games;
     }
-
+    //metodo "get" que devuelve la tienda con sus respectivos objetos
     public static Store getStore() {
         return store;
     }
-
+    //metodo "initialize" que inicializa el funcionamiento del sistema de logros
     public static void initialize() {
         List<Item> items = Store.getItems();
         memberships.add(new Membership("Preferencial", 1, 2d, 24*30, 1));
@@ -263,7 +263,8 @@ public class AchievementSystem {
         games.get(2).getActions().get(2).getAchievements().get(4).getReward().add(items.get(20));
 
     }
-
+    //metodo "addTransaction" que añade la transaccion la lista de transacciones
+    //ademas hace que el usuario destino reciba la lista de objetos como regalos
     public static void addTransaction(Transaction transaction) {
         transactions.add(transaction);
         List<Item> wrappedItems = new LinkedList<>();
