@@ -22,6 +22,8 @@ public abstract class Item {
     //metodo abstracto "use" que sera utilizado en las clases hijas de Item
     public abstract void use(User user);
     public abstract boolean check(User user);
+    //"buy" es un metodo polimorfico
+    //metodo "buy" que le permite al usuario comprar un objeto con los puntos
 
     public void buy(User user) throws AchievementSystemException {
         if (user.getPoints() >= price) {
@@ -33,7 +35,7 @@ public abstract class Item {
             throw new AchievementSystemException("No tenés suficientes puntos");
         }
     }
-
+    //metodo "buy" que le permite al usuario comprar un objeto con el medio de pago elegido
     public void buy(User user, PaymentMethod payment) throws AchievementSystemException {
         if (payment.pay(this)) {
             List<Item> itemList = new LinkedList<>();
@@ -45,6 +47,7 @@ public abstract class Item {
     }
 
     @Override
+    //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
     public String toString() {
         return "Objeto: " + name + '\n' +
                 "Precio: " + price;

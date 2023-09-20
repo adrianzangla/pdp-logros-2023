@@ -13,7 +13,7 @@ public class Skin extends Item {
             user.setNameStyle(content.replaceFirst("username", "[" + user.getActiveMembership().getMembership().getName() + "]" + "[" + user.getRank().getName() + "]" + user.getName()));
         }
     }
-
+    //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
     @Override
     public boolean check(User user) {
         if (!user.getInventory().containsKey(this)) {

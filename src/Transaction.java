@@ -19,7 +19,7 @@ public class Transaction {
     public Receiver getTo() {
         return to;
     }
-
+    //metodo "get" que devuelve emisor de la transaccion
     public Sender getFrom() {
         return from;
     }

@@ -46,6 +46,7 @@ public class Rank extends Item {
     }
 
     @Override
+    //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
     public String toString() {
         return super.toString() + "\n" +
                 "Nivel: " + tier + "\n";

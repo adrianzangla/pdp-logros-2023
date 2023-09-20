@@ -2,32 +2,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Achievement implements Sender {
-    //la clase logro implementa la interfaz transaccionable
     //Atributos: nombre,objetivo del logro,recompensa(lista de objetos),rango requerido,membresia requerida
     private final String name;
     private int target;
     private final List<Item> reward = new LinkedList<>();
     private Rank rankRequired;
     private Membership membershipRequired;
-    //constructor de logro
+    //constructor de "Achievement"
     public Achievement(String name, int target, Rank rankRequired, Membership membershipRequired) {
         this.name = name;
         this.target = target;
         this.rankRequired = rankRequired;
         this.membershipRequired = membershipRequired;
     }
+    //metodo "get" que devuelve el nombre del logro
     public String getName() {
         return name;
     }
-    //metodo get que devuelve el objetivo del logro
+    //metodo "get" que devuelve el objetivo del logro
     public int getTarget() {
         return target;
     }
-    //metodo get que devuelve la recompensa
+    //metodo "get" que devuelve la recompensa
     public List<Item> getReward() {
         return reward;
     }
-    //metodo progreso que gestiona el avance del logro dependiendo su situacion
+    //metodo "progreso" que gestiona el avance del logro dependiendo su situacion
     public void progress(User user, int times) {
         //analiza si el metodo esta cumplido o no(times<0 -> cumplido)
         if (user.getAchievements().getOrDefault(this,0) < 0) {
@@ -53,7 +53,7 @@ public class Achievement implements Sender {
         }
     }
     @Override
-    //realiza la transaccion y la anota en la lista de transacciones del sistema
+    //metodo "transfer" que realiza la transaccion y la anota en la lista de transacciones del sistema
     public void transfer(Receiver to, List<Item> items) {
         Transaction transaction = new Transaction(this, to);
         transaction.getItems().addAll(items);
