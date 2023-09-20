@@ -112,12 +112,15 @@ public class User implements Sender, Receiver, Comparable<User> {
 
     @Override
     public int compareTo(User o) {
-        return Integer.compare(points, o.getPoints());
+        return Integer.compare(o.getPoints(), points);
     }
 
-    public void useAllItems() {
-        for (Item item : inventory.keySet()) {
-            item.use(this);
+    public void useAllConsumables() {
+        List<Item> items = Store.getItems().subList(Store.getConsumablesIndex(), Store.getItems().size());
+        for (Item item : items) {
+            while (inventory.containsKey(item)) {
+                item.use(this);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Menu {
 
-    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 9.\nDesde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
+    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 10.\nDesde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
 
     private static final String options = "Seleccioná una opción:\n" +
             "(1) Elegir un usuario\n" +
@@ -288,9 +288,9 @@ public class Menu {
                 return;
             } catch (AchievementSystemException e) {
                 System.out.println(e.getMessage());
-                continue;
+                return;
             } catch (Exception e) {
-                continue;
+                return;
             }
         }
     }
@@ -422,6 +422,8 @@ public class Menu {
                 } catch (AchievementSystemException e) {
                     System.out.println(e.getMessage());
                     continue;
+                } catch (Exception e) {
+                    continue;
                 }
             }
             for (int j = 0; j < 5; j++) {
@@ -431,20 +433,28 @@ public class Menu {
                 } catch (AchievementSystemException e) {
                     System.out.println(e.getMessage());
                     continue;
+                } catch (Exception e) {
+                    continue;
                 }
             }
             for (int j = 0; j < 10; j++) {
-                User user0 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
-                User user1 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
-                if (user0 != user1) {
-                    List<Item> items = new ArrayList<>(user0.getInventory().keySet());
-                    List<Item> toTransfer = new LinkedList<>();
-                    toTransfer.add(items.get(random.nextInt(items.size())));
-                    user0.transfer(user1, toTransfer);
+                try {
+                    User user0 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
+                    User user1 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
+                    if (user0 != user1) {
+                        List<Item> items = new ArrayList<>(user0.getInventory().keySet());
+                        List<Item> toTransfer = new LinkedList<>();
+                        toTransfer.add(items.get(random.nextInt(items.size())));
+                        user0.transfer(user1, toTransfer);
+                    }
+                } catch (Exception e) {
+                    continue;
                 }
             }
             for (User user : AchievementSystem.getUsers()) {
-                user.useAllItems();
+                user.useAllConsumables();
+                List<Item> items = new ArrayList<>(user.getInventory().keySet());
+                items.get(random.nextInt(items.size())).use(user);
             }
         }
         System.out.println("Simulación finalizada");
@@ -457,7 +467,8 @@ public class Menu {
         Collections.sort(AchievementSystem.getUsers());
         int listIndex = 1;
         for (User user : AchievementSystem.getUsers()) {
-            System.out.println("(" + listIndex + ")" + "\t" + user.getPoints() + "\t" + user.getNameStyle());
+            System.out.println(listIndex+ "\t" + "Puntos: " + user.getPoints() );
+            System.out.println(user.getNameStyle());
             listIndex++;
         }
         sc.nextLine();
