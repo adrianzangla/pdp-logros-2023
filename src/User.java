@@ -16,9 +16,9 @@ public class User implements Sender, Receiver, Comparable<User> {
     //construcor de "User"
     public User(String name) {
         this.name = name;
-        this.nameStyle = name;
-        this.points = 0;
         this.rank = Rank.getDefaultRank();
+        this.nameStyle = "[" + activeMembership.getMembership().getName() + "]" + "[" + rank.getName() + "]" + name;
+        this.points = 0;
         this.hoursPlayed = 0;
     }
 
@@ -29,22 +29,9 @@ public class User implements Sender, Receiver, Comparable<User> {
     public void setHoursPlayed(int hoursPlayed) {
         this.hoursPlayed = hoursPlayed;
     }
-    //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
-    @Override
-    public String toString() {
-        return nameStyle + " {" + '\n' +
-                " achievements=" + achievements + '\n' +
-                ", points=" + points + '\n' +
-                ", rank=" + rank + '\n' +
-                ", activeMembership=" + activeMembership + '\n' +
-                ", paymentMethods=" + paymentMethods + '\n' +
-                ", inventory=" + inventory + '\n' +
-                ", multipliers=" + multipliers + '\n' +
-                '}';
-    }
     //metodo "get" que devuelve el nombre
     public String getName() {
-        return "[" + activeMembership.getMembership().getName() + "]" + "[" + rank.getName() + "]" + name;
+        return name;
     }
     //metodo "get" que devuelve el estilo del nombre
     public String getNameStyle() {
@@ -126,5 +113,11 @@ public class User implements Sender, Receiver, Comparable<User> {
     @Override
     public int compareTo(User o) {
         return Integer.compare(points, o.getPoints());
+    }
+
+    public void useAllItems() {
+        for (Item item : inventory.keySet()) {
+            item.use(this);
+        }
     }
 }

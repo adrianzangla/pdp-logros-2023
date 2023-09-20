@@ -1,16 +1,16 @@
 import java.util.*;
 
-public class    Menu {
+public class Menu {
 
-    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 9. Desde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
+    private static final String welcome = "Bienvenido al Sistema de Logros del Grupo 9.\nDesde el siguiente menú podrás crear usuarios, simular horas de juego, registrar sus logros obtenidos, objetos en el inventario, realizar compras, transacciones y mostrar estadísticas. ¿Suena aburrido? Pues tenés toda la razón";
     private static final String options = "Seleccioná una opción:\n" +
             "(1) Elegir un usuario\n" +
             "(2) Crear un usuario\n" +
             "(3) Simular 200 acciones\n" +
-            "(5) Tabla de Clasificación ";
-    private static final String userCreation = "Ingresá tu nombre o cancelar";
+            "(4) Tabla de Clasificación";
+    private static final String userCreation = "Ingresá el nombre o cancelar";
 
-    private static final String userOptions = "Seleccioná una opción" +
+    private static final String userOptions = "Seleccioná una opción\n" +
             "(1) Jugar" + '\n' +
             "(2) Mostrar inventario" + '\n' +
             "(3) Comprar objeto" + '\n' +
@@ -24,13 +24,12 @@ public class    Menu {
             "(0) Cancelar";
 
     public static void mainMenu() {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
             System.out.println(welcome);
             System.out.println(options);
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 switch (option) {
                     case 1:
                         selectUser();
@@ -40,8 +39,10 @@ public class    Menu {
                         break;
                     case 3:
                         simulate();
+                        break;
                     case 4:
                         leaderboard();
+                        break;
                 }
             } catch (Exception e) {
                 continue;
@@ -50,17 +51,16 @@ public class    Menu {
     }
 
     private static void selectUser() {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
             int listIndex = 1;
             for (User user : AchievementSystem.getUsers()) {
-                System.out.println("(" + listIndex + ") " + "\t" +user.getNameStyle());
+                System.out.println("(" + listIndex + ") " + "\t" + user.getNameStyle());
                 listIndex++;
             }
             System.out.println("(0) Cancelar");
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
@@ -73,13 +73,13 @@ public class    Menu {
     }
 
     private static void userMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
             System.out.println(user.getNameStyle());
+            System.out.println("Puntos: " + user.getPoints());
             System.out.println(userOptions);
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 switch (option) {
                     case 1:
                         playMenu(user);
@@ -115,17 +115,16 @@ public class    Menu {
     }
 
     private static void createUser() {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        String name;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
             System.out.println(userCreation);
             try {
-                name = sc.nextLine();
+                String name = sc.nextLine();
                 if (name.equalsIgnoreCase("cancelar")) {
                     return;
                 }
                 for (User user : AchievementSystem.getUsers()) {
-                    if (user.getName() == name) {
+                    if (name.equalsIgnoreCase(user.getName())) {
                         throw new AchievementSystemException("Nombre de usuario no disponible");
                     }
                 }
@@ -142,25 +141,26 @@ public class    Menu {
     }
 
     private static void playMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
-        int hours;
-        int listIndex = 1;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            int listIndex = 1;
             try {
-                System.out.println("¿Cuántas horas?");
-                hours = sc.nextInt();
+                System.out.println("Elegí un juego");
                 for (Game game : AchievementSystem.getGames()) {
-                    System.out.println("(" + listIndex+ ") " + "\t" + game.getName());
+                    System.out.println("(" + listIndex + ") " + "\t" + game.getName());
                     listIndex++;
                 }
                 System.out.println("(0) Cancelar");
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
+                System.out.println("¿Cuántas horas?");
+                int hours = sc.nextInt();
                 AchievementSystem.getGames().get(option - 1).play(user, hours);
                 System.out.println("El usuario terminó de jugar");
+                sc.nextLine();
+                return;
             } catch (Exception e) {
                 continue;
             }
@@ -168,22 +168,21 @@ public class    Menu {
     }
 
     private static void inventoryMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
-        int listIndex = 1;
-        Item selectedItem;
-        List<Item> items = new ArrayList<>();
         while (true) {
-            for (Item item : user.getInventory().keySet()) {
-                System.out.println("(" + listIndex+ ") " + "\t" + item.getName() + "\t" + user.getInventory().get(item));
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            int listIndex = 1;
+            List<Item> items = new ArrayList<>(user.getInventory().keySet());
+            for (Item item : items) {
+                System.out.println("(" + listIndex + ") " + "\t" + user.getInventory().get(item) + "\t" + item.getName());
+                listIndex++;
             }
             try {
                 System.out.println("(0) Cancelar");
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
-                selectedItem = items.get(option - 1);
+                Item selectedItem = items.get(option - 1);
                 System.out.println(selectedItem);
                 System.out.println(itemOptions);
                 option = sc.nextInt();
@@ -198,6 +197,7 @@ public class    Menu {
                     transferMenu(user, selectedItem);
                     System.out.println("Objeto transferido");
                 }
+                sc.nextLine();
             } catch (Exception e) {
                 continue;
             }
@@ -205,11 +205,10 @@ public class    Menu {
     }
 
     private static void transferMenu(User user, Item item) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
-        int listIndex = 1;
-        List<User> users = new ArrayList<>();
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            int listIndex = 1;
+            List<User> users = new ArrayList<>();
             for (User otherUser : AchievementSystem.getUsers()) {
                 if (otherUser != user) {
                     System.out.println("(" + listIndex + ")" + "\t" + otherUser.getNameStyle());
@@ -218,10 +217,12 @@ public class    Menu {
                 }
             }
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 List<Item> itemList = new LinkedList<>();
                 itemList.add(item);
                 user.transfer(users.get(option - 1), itemList);
+                sc.nextLine();
+                return;
             } catch (Exception e) {
                 continue;
             }
@@ -229,23 +230,21 @@ public class    Menu {
     }
 
     private static void storeMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        List<Item> items = Store.getItems();
-        int listIndex = 1;
-        int option;
-        Item selectedItem;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            int listIndex = 1;
+            List<Item> items = Store.getItems();
             for (Item item : items) {
                 System.out.println("(" + listIndex + ")" + "\t" + item.getName());
                 listIndex++;
             }
             System.out.println("(0) Cancelar");
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
-                selectedItem = items.get(option - 1);
+                Item selectedItem = items.get(option - 1);
                 System.out.println(selectedItem.toString());
                 System.out.println("(1) Comprar");
                 System.out.println("(0) Cancelar");
@@ -255,6 +254,7 @@ public class    Menu {
                 }
                 System.out.println("Elegí el método de pago");
                 buyMenu(user, selectedItem);
+                return;
             } catch (Exception e) {
                 continue;
             }
@@ -262,10 +262,9 @@ public class    Menu {
     }
 
     private static void buyMenu(User user, Item item) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int listIndex = 2;
-        int option;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            int listIndex = 2;
             System.out.println("(" + 1 + ")" + "\t" + "Puntos");
             for (PaymentMethod pm : user.getPaymentMethods()) {
                 System.out.println("(" + listIndex + ")" + "\t" + pm.getName());
@@ -273,15 +272,18 @@ public class    Menu {
             }
             System.out.println("(0) Cancelar");
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
                 if (option == 1) {
                     item.buy(user);
                 } else {
-                    item.buy(user, user.getPaymentMethods().get(listIndex - 2));
+                    item.buy(user, user.getPaymentMethods().get(option - 2));
                 }
+                System.out.println("Objeto comprado");
+                sc.nextLine();
+                return;
             } catch (AchievementSystemException e) {
                 System.out.println(e.getMessage());
                 continue;
@@ -292,9 +294,10 @@ public class    Menu {
     }
 
     private static void showAchievements(User user) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         Set<Achievement> printed = new HashSet<>();
         for (Game game : AchievementSystem.getGames()) {
-            System.out.println(game.getName());
+            System.out.println(game.getName() + ": ");
             for (Action action : game.getActions()) {
                 for (Achievement achievement : action.getAchievements()) {
                     if (user.getAchievements().containsKey(achievement)) {
@@ -310,25 +313,27 @@ public class    Menu {
                 }
             }
         }
+        sc.nextLine();
     }
 
     private static void paymentMethodMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int option;
         while (true) {
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
             System.out.println("(1) Tarjeta de Crédito");
             System.out.println("(2) Tarjeta de Débito");
             System.out.println("(0) Cancelar");
             try {
-                option = sc.nextInt();
+                int option = sc.nextInt();
                 if (option == 0) {
                     return;
                 }
                 if (option == 1) {
                     creditMenu(user);
+                    return;
                 }
                 if (option == 2) {
                     debitMenu(user);
+                    return;
                 }
             } catch (Exception e) {
                 continue;
@@ -338,14 +343,23 @@ public class    Menu {
     }
 
     private static void creditMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         while (true) {
-            System.out.println("Ingresá el nombe de la tarjeta de crédito");
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            System.out.println("Ingresá el nombe de la tarjeta de crédito o cancelar");
             try {
                 String name = sc.nextLine();
-                System.out.println("Ingresá el límite (No mientas)");
+                if (name == "cancelar") {
+                    return;
+                }
+                System.out.println("Ingresá el límite (No mientas) o 0 para cancelar");
                 Double limit = sc.nextDouble();
+                if (limit == 0) {
+                    return;
+                }
                 user.getPaymentMethods().add(new CreditCard(name, limit));
+                System.out.println("Método de pago agregado");
+                sc.nextLine();
+                return;
             } catch (Exception e) {
                 continue;
             }
@@ -353,14 +367,24 @@ public class    Menu {
     }
 
     private static void debitMenu(User user) {
-        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         while (true) {
-            System.out.println("Ingresá el nombe de la tarjeta de débito");
+            Scanner sc = new Scanner(System.in).useDelimiter("\n");
+            System.out.println("Ingresá el nombe de la tarjeta de débito o cancelar");
             try {
                 String name = sc.nextLine();
-                System.out.println("Ingresá el balance (No mientas)");
-                Double limit = sc.nextDouble();
-                user.getPaymentMethods().add(new DebitCard(name, limit));
+                if (name == "cancelar") {
+                    return;
+                }
+                System.out.println("Ingresá el balance (No mientas) o -1 para cancelar");
+                Double balance = sc.nextDouble();
+                if (balance == -1) {
+                    return;
+                }
+                user.getPaymentMethods().add(new DebitCard(name, balance));
+                System.out.println("Método de pago agregado");
+                sc.nextLine();
+                return;
+
             } catch (Exception e) {
                 continue;
             }
@@ -368,6 +392,7 @@ public class    Menu {
     }
 
     private static void averageSpending(User user) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         int f = 0;
         for (Transaction transaction : AchievementSystem.getTransactions()) {
             if (transaction.getFrom() == AchievementSystem.getStore() && transaction.getTo() == user) {
@@ -377,10 +402,12 @@ public class    Menu {
             }
         }
         System.out.println("Gasto total: " + f);
-        System.out.println("Gasto promedio: " + f/user.getHoursPlayed());
+        System.out.println("Gasto promedio: " + f / user.getHoursPlayed());
+        sc.nextLine();
     }
 
     private static void simulate() {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         Random random = new Random();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 30; j++) {
@@ -403,12 +430,7 @@ public class    Menu {
                     continue;
                 }
             }
-            for (int j = 0; j < 5; j++) {
-                User user = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
-                List<Item> items = new ArrayList<>(user.getInventory().keySet());
-                items.get(random.nextInt(items.size())).use(user);
-            }
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 10; j++) {
                 User user0 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
                 User user1 = AchievementSystem.getUsers().get(random.nextInt(AchievementSystem.getUsers().size()));
                 if (user0 != user1) {
@@ -418,14 +440,22 @@ public class    Menu {
                     user0.transfer(user1, toTransfer);
                 }
             }
+            for (User user : AchievementSystem.getUsers()) {
+                user.useAllItems();
+            }
         }
+        System.out.println("Simulación finalizada");
+        sc.nextLine();
     }
+
     private static void leaderboard() {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
         Collections.sort(AchievementSystem.getUsers());
         int listIndex = 1;
-        for (User user: AchievementSystem.getUsers()) {
-            System.out.println("(" + listIndex + ")" + "\t" + user.getNameStyle());
+        for (User user : AchievementSystem.getUsers()) {
+            System.out.println("(" + listIndex + ")" + "\t" + user.getPoints() + "\t" + user.getNameStyle());
             listIndex++;
         }
+        sc.nextLine();
     }
 }

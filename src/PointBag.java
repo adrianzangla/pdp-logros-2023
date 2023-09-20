@@ -13,9 +13,22 @@ public class PointBag extends Item {
         if (check(user)) {
             user.setPoints((int) (user.getPoints() + value * user.getActiveMembership().getMembership().getPointMultiplier()));
             user.getInventory().put(this, user.getInventory().get(this) - 1);
+            check(user);
         }
-        check(user);
     }
+
+    @Override
+    public boolean check(User user) {
+        if (!user.getInventory().containsKey(this)) {
+            return false;
+        }
+        if (user.getInventory().get(this) < 1) {
+            user.getInventory().remove(this);
+            return false;
+        }
+        return true;
+    }
+
     //metodo "toString" que devuelve la forma en la que va a imprimir lo que se le indica
     @Override
     public String toString() {

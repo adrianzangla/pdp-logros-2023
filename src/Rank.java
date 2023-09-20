@@ -29,8 +29,20 @@ public class Rank extends Item {
                 user.setPoints(user.getPoints() + tier);
             }
             user.getInventory().put(this, user.getInventory().get(this) - 1);
+            check(user);
         }
-        check(user);
+    }
+
+    @Override
+    public boolean check(User user) {
+        if (!user.getInventory().containsKey(this)) {
+            return false;
+        }
+        if (user.getInventory().get(this) < 1) {
+            user.getInventory().remove(this);
+            return false;
+        }
+        return true;
     }
 
     @Override

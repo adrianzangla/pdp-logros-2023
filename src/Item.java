@@ -21,16 +21,7 @@ public abstract class Item {
     }
     //metodo abstracto "use" que sera utilizado en las clases hijas de Item
     public abstract void use(User user);
-    protected boolean check(User user) {
-        if (!user.getInventory().containsKey(this)) {
-            return false;
-        }
-        if (user.getInventory().get(this) < 1) {
-            user.getInventory().remove(this);
-            return false;
-        }
-        return true;
-    }
+    public abstract boolean check(User user);
 
     public void buy(User user) throws AchievementSystemException {
         if (user.getPoints() >= price) {
@@ -56,6 +47,6 @@ public abstract class Item {
     @Override
     public String toString() {
         return "Objeto: " + name + '\n' +
-                "Precio: " + price + '\n';
+                "Precio: " + price;
     }
 }

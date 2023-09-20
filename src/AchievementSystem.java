@@ -262,6 +262,8 @@ public class AchievementSystem {
         games.get(2).getActions().get(2).getAchievements().get(4).getReward().add(items.get(8));
         games.get(2).getActions().get(2).getAchievements().get(4).getReward().add(items.get(20));
 
+        items.addAll(memberships);
+        items.addAll(ranks);
     }
 
     public static void addTransaction(Transaction transaction) {

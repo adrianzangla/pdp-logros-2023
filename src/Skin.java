@@ -10,8 +10,27 @@ public class Skin extends Item {
     @Override
     public void use(User user) {
         if (check(user)) {
-            user.setNameStyle(content.replaceFirst("username", user.getName()));
+            user.setNameStyle(content.replaceFirst("username", "[" + user.getActiveMembership().getMembership().getName() + "]" + "[" + user.getRank().getName() + "]" + user.getName()));
         }
+    }
+
+    @Override
+    public boolean check(User user) {
+        if (!user.getInventory().containsKey(this)) {
+            unequip(user);
+            return false;
+
+        }
+        if (user.getInventory().get(this) < 1) {
+            user.getInventory().remove(this);
+            unequip(user);
+            return false;
+        }
+        return true;
+    }
+
+    private void unequip(User user) {
+        user.setNameStyle("[" + user.getActiveMembership().getMembership().getName() + "]" + "[" + user.getRank().getName() + "]" + user.getName());
     }
 
     @Override

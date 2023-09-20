@@ -15,18 +15,33 @@ public class GameItem extends Item {
     public void use(User user) {
         if (check(user)) {
             user.getMultipliers().put(game, multiplier);
-            user.getInventory().put(this, user.getInventory().get(this) - 1);
         }
-        check(user);
+    }
+
+    @Override
+    public boolean check(User user) {
+        if (!user.getInventory().containsKey(this)) {
+            unequip(user);
+            return false;
+        }
+        if (user.getInventory().get(this) < 1) {
+            user.getInventory().remove(this);
+            unequip(user);
+            return false;
+        }
+        return true;
+    }
+
+    private void unequip(User user) {
+        user.getMultipliers().remove(game);
     }
 
     @Override
     //metodo toString que devuelve la forma en la que va a imprimir lo que se le indica
     public String toString() {
         return super.toString() + "\n" +
-                "Juego:" + game.getName() + "\n" +
+                "Juego: " + game.getName() + "\n" +
                 "Ventaja: x" + multiplier + "\n";
-
     }
 }
 
