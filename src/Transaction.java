@@ -1,31 +1,26 @@
-//Transaction es una clase abstracta de la cual se realiza herencia
-public abstract class Transaction {
-    private long idTransaction;
-    private User issuingUser;
-    private User receivingUser;
-    public Transaction(){
+import java.util.LinkedList;
+import java.util.List;
 
+public class Transaction {
+    //atributos: desde,hasta,lista de objetos
+    private final Sender from;
+    private final Receiver to;
+    private final List<Item> items = new LinkedList<>();
+    //constructor de "Transaccion"
+    public Transaction(Sender from, Receiver to) {
+        this.from = from;
+        this.to = to;
     }
-
-    public long getIdTransaction() {
-        return idTransaction;
+    //metodo "get" que devuelve la lista de objetos a transferir
+    public List<Item> getItems() {
+        return items;
     }
-
-    public void setIdTransaction(long idTransaction) {
-        this.idTransaction = idTransaction;
+    //metodo "get" que devuelve hacia que destinatario(usuario) se realiza la transaccion
+    public Receiver getTo() {
+        return to;
     }
-
-    public User getIssuingUser() {
-        return issuingUser;
+    //metodo "get" que devuelve emisor de la transaccion
+    public Sender getFrom() {
+        return from;
     }
-
-    public User getReceivingUser() {
-        return receivingUser;
-    }
-
-    public void setReceivingUser(User receivingUser) {
-        this.receivingUser = receivingUser;
-    }
-
-
 }

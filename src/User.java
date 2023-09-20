@@ -1,79 +1,123 @@
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class User {
-    private String name;
-    private List<Game> games;
-    private List<Progress> progresses;
+public class User implements Sender, Receiver, Comparable<User> {
+//atributos: nombre,estilo de nombre,logros,puntos,rango,membresia activa,metodos de pago,inventario,multiplicadores
+    private final String name;
+    private String nameStyle;
+    private final Map<Achievement, Integer> achievements = new HashMap<>();
+    private int points;
+    private Rank rank;
+    private final ActiveMembership activeMembership = new ActiveMembership(Membership.getDefaultMembership(), -1);
+    private final List<PaymentMethod> paymentMethods = new LinkedList<>();
+    private final Map<Item, Integer> inventory = new HashMap<>();
+    private final Map<Game, Double> multipliers = new HashMap<>();
+    private int hoursPlayed;
 
-    private Membership membership;
-
-    private Float experience;
-
-    private List<Item> items;
-    private static List<MeansOfPayment>meansOfPayment;
-
-    public Float getExperience() {
-        return experience;
+    //construcor de "User"
+    public User(String name) {
+        this.name = name;
+        this.rank = Rank.getDefaultRank();
+        this.nameStyle = "[" + activeMembership.getMembership().getName() + "]" + "[" + rank.getName() + "]" + name;
+        this.points = 0;
+        this.hoursPlayed = 0;
     }
 
-    public static List<MeansOfPayment> getMeansOfPayment() {
-        return meansOfPayment;
+    public int getHoursPlayed() {
+        return hoursPlayed;
     }
 
-    public void setMeansOfPayment(List<MeansOfPayment> meansOfPayment) {
-        this.meansOfPayment = meansOfPayment;
+    public void setHoursPlayed(int hoursPlayed) {
+        this.hoursPlayed = hoursPlayed;
+    }
+    //metodo "get" que devuelve el nombre
+    public String getName() {
+        return name;
+    }
+    //metodo "get" que devuelve el estilo del nombre
+    public String getNameStyle() {
+        return nameStyle;
+    }
+    //metodo "get" que devuelve los logros
+    public Map<Achievement, Integer> getAchievements() {
+        return achievements;
+    }
+    //metodo "get" que devuelve los puntos
+    public int getPoints() {
+        return points;
+    }
+    //metodo "get" que devuelve la membresia que el usuario utiliza actualmente
+    public ActiveMembership getActiveMembership() {
+        return activeMembership;
+    }
+    //metodo "get" que devuelve los metodos de pago
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+    //metodo "get" que devuelve el inventario
+    public Map<Item, Integer> getInventory() {
+        return inventory;
+    }
+    //metodo "get" que devuelve el rango
+    public Rank getRank() {
+        return rank;
+    }
+    //metodo "get" que devuelve los multiplicadores de un juego
+    public Map<Game, Double> getMultipliers() {
+        return multipliers;
+    }
+    //metodo "set" que actualiza el estilo del nombre
+    public void setNameStyle(String nameStyle) {
+        this.nameStyle = nameStyle;
+    }
+    //metodo "set" que actualiza los puntos
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+    //metodo "set" que actualiza la membresia y su tiempo de vida
+    public void setActiveMembership(Membership membership) {
+        this.activeMembership.setMembership(membership);
+        this.activeMembership.setHoursLeft(membership.getTime());
+    }
+    //metodo "set" que actualiza el rango
+    public void setRank(Rank rank) {
+        this.rank = rank;
     }
 
-    public void buyGame(Game game) {
-        games.add(game);
-        List<Achievement> achievements = game.getAchievements();
-        for (Achievement achievement : achievements) {
-            Progress progress = new Progress(achievement);
-            progresses.add(progress);
-        }
-    }
 
-    private Boolean isComplete(List<Achievement> achievements) {
-        for (Achievement achievement : achievements) {
-            for (Progress progress : progresses) {
-                if (progress.getAchievement() == achievement) {
-                    if (!progress.getComplete()) {
-                        return false;
-                    }
-                }
+    @Override
+    //metodo "tranfer" que proviene de la interfaz Sender
+    //realiza la transferencia de ciertos objetos, elegidos por el usuario, hacia otro suario
+    public void transfer(Receiver to, List<Item> items) {
+        List<Item> toTransfer = new LinkedList<>();
+        for (Item item : items) {
+            if (item.check(this)) {
+                toTransfer.add(item);
             }
+            inventory.put(item, inventory.get(item) - 1);
+            item.check(this);
         }
-        return true;
+        Transaction transaction = new Transaction(this, to);
+        transaction.getItems().addAll(toTransfer);
+        AchievementSystem.addTransaction(transaction);
     }
 
-    private void obtainReward(Achievement achievement) {
-        this.items.addAll(achievement.getReward().getItems());
-    }
-
-    public void performAction(Action action, Float times) {
-        // Para cada Progress en progresses
-        for (Progress progress : progresses) {
-            Achievement achievement = progress.getAchievement();
-            if (
-                    achievement.getRankRequired().isRank(this)
-                    && achievement.getMembershipRequired() == this.membership
-                    && isComplete(achievement.getAchievementsRequired())
-            ) {
-                Map<Action, Float> value = progress.getValue();
-                // Si la accion pertenece al progreso
-                if (value.containsKey(action)) {
-                    Float currentValue = value.get(action);
-                    value.put(action, currentValue + times);
-                    Map<Action, Float> target = achievement.getTarget();
-
-                    progress.setComplete(value.get(action) >= target.get(action));
-
-
-                }
-            }
-
+    @Override
+    //metodo "receive" que proviene de la interfaz Receiver
+    //recibe una transferencia de objetos y realiza con ellos lo que le corresponda al metodo use de cada subclase de objeto
+    public void receive(List<Item> items) {
+        for (Item item : items) {
+            item.use(this);
         }
     }
 
+    @Override
+    public int compareTo(User o) {
+        return Integer.compare(points, o.getPoints());
+    }
+
+    public void useAllItems() {
+        for (Item item : inventory.keySet()) {
+            item.use(this);
+        }
+    }
 }
