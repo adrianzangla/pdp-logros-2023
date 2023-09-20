@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Menu {
@@ -50,6 +51,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "selectUser" que hace que el usuario elija de la lista de usuarios cual quiere
     private static void selectUser() {
         while (true) {
@@ -72,6 +74,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "userMenu" que hace que el usuario elija una de las opciones a realizar con su usuario seleccionado
     private static void userMenu(User user) {
         while (true) {
@@ -114,6 +117,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "createUser" que crea un usuario y lo agrega a la lista de usuarios para luego poder ser seleccionado
     private static void createUser() {
         while (true) {
@@ -140,6 +144,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "playMenu" que le da a elegir al usuario que juego jugar y cuantas horas.
     //Una vez termina de jugar el usuario se da el aviso por pantalla
     private static void playMenu(User user) {
@@ -168,6 +173,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "inventoryMenu" que muestra el inventario para que el usuario consuma un objeto o realice una transaccion
     private static void inventoryMenu(User user) {
         while (true) {
@@ -205,6 +211,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "transferMenu" que le permite al usuario elegir un destinatario para luego realizar la transaccion
     private static void transferMenu(User user, Item item) {
         while (true) {
@@ -230,6 +237,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "storeMenu" que muestra todos los objetos de la tienda para que el usuario elija cual comprar
     private static void storeMenu(User user) {
         while (true) {
@@ -262,6 +270,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "buyMenu" que le permite al usuario comprar un objeto
     private static void buyMenu(User user, Item item) {
         while (true) {
@@ -294,6 +303,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "showAchievements" que muestra los logros del usuario
     private static void showAchievements(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
@@ -317,6 +327,7 @@ public class Menu {
         }
         sc.nextLine();
     }
+
     //metodo "paymentMethodMenu" que le da a elejir al usuario con que metodo de pago realizar la compra
     private static void paymentMethodMenu(User user) {
         while (true) {
@@ -343,6 +354,7 @@ public class Menu {
 
         }
     }
+
     //metodo "creditMenu" que capta la tarjera de credito del usuario y su limite
     private static void creditMenu(User user) {
         while (true) {
@@ -368,6 +380,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "debitMenu" que  capta la tarjera de debito del usuario y su balance
     private static void debitMenu(User user) {
         while (true) {
@@ -393,6 +406,7 @@ public class Menu {
             }
         }
     }
+
     //metodo "averageSpending" que muestra las estadisticas de gasto de un usuario
     private static void averageSpending(User user) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
@@ -405,9 +419,14 @@ public class Menu {
             }
         }
         System.out.println("Gasto total: " + f);
-        System.out.println("Gasto promedio: " + f / user.getHoursPlayed());
+        System.out.println("Horas jugadas: " + user.getHoursPlayed());
+        BigDecimal bdf = BigDecimal.valueOf(f);
+        BigDecimal bdhp = BigDecimal.valueOf(user.getHoursPlayed());
+        BigDecimal avg = bdf.divide(bdhp, 5, BigDecimal.ROUND_HALF_UP);
+        System.out.println("Gasto promedio por horas jugadas: " + avg);
         sc.nextLine();
     }
+
     //metodo "simulate" que simula movimientos al azar del juego
     private static void simulate() {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
@@ -467,7 +486,7 @@ public class Menu {
         Collections.sort(AchievementSystem.getUsers());
         int listIndex = 1;
         for (User user : AchievementSystem.getUsers()) {
-            System.out.println(listIndex+ "\t" + "Puntos: " + user.getPoints() );
+            System.out.println(listIndex + "\t" + "Puntos: " + user.getPoints());
             System.out.println(user.getNameStyle());
             listIndex++;
         }
